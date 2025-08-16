@@ -63,7 +63,7 @@ const ContactSection = () => {
               <div className="min-w-0 flex-1">
                 <p className="text-sm text-gray-400 mb-1">Email</p>
                 <p className="text-base text-white font-medium truncate group-hover:text-teal-300 transition-colors">
-                  zand@example.com
+                  zulfadi.andre23@gmai.com
                 </p>
               </div>
             </a>
@@ -110,7 +110,7 @@ const ContactSection = () => {
               <div className="min-w-0 flex-1">
                 <p className="text-sm text-gray-400 mb-1">Location</p>
                 <p className="text-base text-white font-medium">
-                  Padang, West Sumatra
+                  Riau, Indonesia
                 </p>
               </div>
             </div>
@@ -124,7 +124,7 @@ const ContactSection = () => {
 
             <div className="flex justify-center space-x-4">
               <a
-                href="https://github.com/yourusername"
+                href="https://github.com/zulandre23"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group p-4 bg-gray-800/50 hover:bg-teal-400/20 border border-gray-700/50 hover:border-teal-400/50 rounded-xl transition-all duration-200 hover:scale-105"
@@ -134,7 +134,7 @@ const ContactSection = () => {
               </a>
 
               <a
-                href="https://linkedin.com/in/yourusername"
+                href="https://linkedin.com/in/zulfadiandre"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group p-4 bg-gray-800/50 hover:bg-teal-400/20 border border-gray-700/50 hover:border-teal-400/50 rounded-xl transition-all duration-200 hover:scale-105"
@@ -144,7 +144,7 @@ const ContactSection = () => {
               </a>
 
               <a
-                href="https://instagram.com/yourusername"
+                href="https://instagram.com/zuuulllll_"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group p-4 bg-gray-800/50 hover:bg-teal-400/20 border border-gray-700/50 hover:border-teal-400/50 rounded-xl transition-all duration-200 hover:scale-105"
