@@ -301,6 +301,7 @@ export default function HorizontalPortfolio() {
     sections.length,
     isInitialized,
     showWelcome,
+    aboutSubSection,
   ]);
 
   // Enhanced touch handler for mobile with About section integration - FIXED VERSION
@@ -803,17 +804,12 @@ export default function HorizontalPortfolio() {
               <Footer />
             </div>
           </div>
-
           <div className="flex md:hidden flex-col h-full">
-            <div className="flex-1 min-h-0 pb-16">
+            <div className="flex-1 min-h-0">
               <ContactSection />
             </div>
-            <div className="h-16 flex-shrink-0 bg-gray-900 border-t border-gray-700">
-              <div className="h-full flex items-center justify-center px-4">
-                <p className="text-gray-400 text-sm text-center">
-                  © 2024 Portfolio. Developed by ZAND
-                </p>
-              </div>
+            <div className="h-16 flex-shrink-0">
+              <Footer />
             </div>
           </div>
         </div>

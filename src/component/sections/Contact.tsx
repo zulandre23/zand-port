@@ -6,114 +6,170 @@ import {
   Github,
   Linkedin,
   Instagram,
+  MapPin,
+  MessageSquare,
 } from "lucide-react";
 
 const ContactSection = () => {
   return (
     <section
-      className="min-w-full h-full flex items-center justify-center bg-black px-4 sm:px-6 lg:px-8"
+      className="w-full bg-black py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
       style={{ scrollSnapAlign: "start" }}
     >
-      {/* Mobile Content - Scrollable */}
-      <div className="contact-content-scrollable lg:max-h-none w-full max-w-4xl text-white text-center">
-        {/* Header */}
-        <div className="flex items-center justify-center mb-8 lg:mb-12">
-          <MessageCircle
-            size={32}
-            className="text-yellow-400 mr-3 sm:mr-4 sm:size-12"
-          />
-          <h2 className="text-3xl sm:text-4xl lg:text-6xl font-bold">
-            Contact
-          </h2>
+      {/* Background Effects - Subtle for mobile */}
+      <div className="absolute inset-0 opacity-10 sm:opacity-20">
+        <div className="absolute top-10 left-5 w-32 h-32 sm:w-48 sm:h-48 lg:w-64 lg:h-64 bg-teal-400 rounded-full filter blur-2xl animate-pulse"></div>
+        <div
+          className="absolute bottom-10 right-5 w-32 h-32 sm:w-48 sm:h-48 lg:w-64 lg:h-64 bg-cyan-400 rounded-full filter blur-2xl animate-pulse"
+          style={{ animationDelay: "2s" }}
+        ></div>
+      </div>
+
+      {/* Container with proper spacing */}
+      <div className="max-w-4xl mx-auto relative z-10">
+        {/* Header Section */}
+        <div className="text-center mb-8 sm:mb-12">
+          <div className="flex items-center justify-center mb-4 sm:mb-6">
+            <div className="relative mr-3">
+              <div className="absolute inset-0 bg-teal-400 rounded-full blur-sm opacity-50"></div>
+              <MessageCircle className="text-teal-400 relative z-10 w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12" />
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-300 bg-clip-text text-transparent">
+              Contact Me
+            </h2>
+          </div>
+          <p className="text-gray-300 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed px-2">
+            Ready to bring your ideas to life? Let&apos;s connect and create
+            something amazing together.
+          </p>
         </div>
 
-        {/* Subtitle */}
-        <p className="text-lg sm:text-xl lg:text-2xl mb-8 lg:mb-12 text-gray-200 px-4">
-          Let&apos;s work together to bring your ideas to life!
-        </p>
+        {/* Single Contact Card */}
+        <div className="bg-gray-900/70 backdrop-blur-sm border border-teal-400/20 rounded-2xl p-6 sm:p-8 shadow-xl">
+          <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-6 text-center bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">
+            Let&apos;s Connect
+          </h3>
 
-        {/* Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-          {/* Contact Info */}
-          <div className="space-y-6 lg:space-y-8">
-            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-6 lg:mb-8 text-yellow-400">
-              Get In Touch
-            </h3>
+          {/* Contact Methods */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            {/* Email */}
+            <a
+              href="mailto:zand@example.com"
+              className="flex items-center p-4 rounded-xl hover:bg-teal-400/10 transition-all duration-200 group cursor-pointer border border-gray-800 hover:border-teal-400/30"
+            >
+              <div className="flex-shrink-0 w-12 h-12 bg-teal-400/20 rounded-lg flex items-center justify-center mr-4 group-hover:bg-teal-400/30 transition-colors">
+                <Mail className="text-teal-400 w-6 h-6" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm text-gray-400 mb-1">Email</p>
+                <p className="text-base text-white font-medium truncate group-hover:text-teal-300 transition-colors">
+                  zand@example.com
+                </p>
+              </div>
+            </a>
 
-            {/* Email - MOBILE: No transitions, DESKTOP: Smooth */}
-            <div className="flex items-center justify-center lg:justify-start text-sm sm:text-base lg:text-lg group">
-              <Mail
-                className="text-yellow-400 mr-3 sm:mr-4 flex-shrink-0 md:group-hover:scale-110 md:transition-transform md:duration-200 transition-none"
-                size={20}
-              />
-              <span className="break-all">zand@example.com</span>
-            </div>
+            {/* WhatsApp */}
+            <a
+              href="https://wa.me/6212345678990"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center p-4 rounded-xl hover:bg-green-400/10 transition-all duration-200 group cursor-pointer border border-gray-800 hover:border-green-400/30"
+            >
+              <div className="flex-shrink-0 w-12 h-12 bg-green-400/20 rounded-lg flex items-center justify-center mr-4 group-hover:bg-green-400/30 transition-colors">
+                <MessageSquare className="text-green-400 w-6 h-6" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm text-gray-400 mb-1">WhatsApp</p>
+                <p className="text-base text-white font-medium group-hover:text-green-300 transition-colors">
+                  Chat on WhatsApp
+                </p>
+              </div>
+            </a>
 
-            {/* Phone - MOBILE: No transitions, DESKTOP: Smooth */}
-            <div className="flex items-center justify-center lg:justify-start text-sm sm:text-base lg:text-lg group">
-              <Phone
-                className="text-yellow-400 mr-3 sm:mr-4 flex-shrink-0 md:group-hover:scale-110 md:transition-transform md:duration-200 transition-none"
-                size={20}
-              />
-              <span>+62 123 456 7890</span>
-            </div>
+            {/* Phone */}
+            <a
+              href="tel:+6212345678990"
+              className="flex items-center p-4 rounded-xl hover:bg-teal-400/10 transition-all duration-200 group cursor-pointer border border-gray-800 hover:border-teal-400/30"
+            >
+              <div className="flex-shrink-0 w-12 h-12 bg-teal-400/20 rounded-lg flex items-center justify-center mr-4 group-hover:bg-teal-400/30 transition-colors">
+                <Phone className="text-teal-400 w-6 h-6" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm text-gray-400 mb-1">Phone</p>
+                <p className="text-base text-white font-medium group-hover:text-teal-300 transition-colors">
+                  +62 123 456 7890
+                </p>
+              </div>
+            </a>
 
-            {/* Mobile CTA Button - MOBILE: No transitions, DESKTOP: Smooth */}
-            <div className="lg:hidden mt-8">
-              <button className="w-full bg-yellow-400 text-black px-6 py-4 rounded-full font-semibold text-base active:bg-yellow-600 md:hover:bg-yellow-500 md:transition-all md:duration-300 md:shadow-lg md:transform md:hover:scale-105 md:active:scale-95 transition-none mobile-touch-feedback">
-                Start a Project
-              </button>
+            {/* Location */}
+            <div className="flex items-center p-4 rounded-xl hover:bg-teal-400/10 transition-all duration-200 group cursor-pointer border border-gray-800">
+              <div className="flex-shrink-0 w-12 h-12 bg-teal-400/20 rounded-lg flex items-center justify-center mr-4 group-hover:bg-teal-400/30 transition-colors">
+                <MapPin className="text-teal-400 w-6 h-6" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm text-gray-400 mb-1">Location</p>
+                <p className="text-base text-white font-medium">
+                  Padang, West Sumatra
+                </p>
+              </div>
             </div>
           </div>
 
-          {/* Social & CTA */}
-          <div className="space-y-6 lg:space-y-8">
-            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-6 lg:mb-8 text-yellow-400">
-              Follow Me
-            </h3>
+          {/* Social Media Section */}
+          <div className="border-t border-gray-800 pt-6">
+            <p className="text-sm text-gray-400 text-center mb-6">
+              Follow me on social media:
+            </p>
 
-            {/* Social Icons - MOBILE: No transitions, DESKTOP: Smooth */}
-            <div className="flex justify-center space-x-4 sm:space-x-6">
+            <div className="flex justify-center space-x-4">
               <a
-                href="#"
-                className="p-2 rounded-full md:hover:bg-gray-800 md:transition-all md:duration-300 group transition-none mobile-touch-feedback"
+                href="https://github.com/yourusername"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group p-4 bg-gray-800/50 hover:bg-teal-400/20 border border-gray-700/50 hover:border-teal-400/50 rounded-xl transition-all duration-200 hover:scale-105"
+                title="GitHub"
               >
-                <Github
-                  className="text-white md:group-hover:text-yellow-400 md:transition-colors md:duration-300 md:transform md:group-hover:scale-110 transition-none"
-                  size={28}
-                />
+                <Github className="w-6 h-6 text-gray-300 group-hover:text-teal-400 transition-colors" />
               </a>
+
               <a
-                href="#"
-                className="p-2 rounded-full md:hover:bg-gray-800 md:transition-all md:duration-300 group transition-none mobile-touch-feedback"
+                href="https://linkedin.com/in/yourusername"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group p-4 bg-gray-800/50 hover:bg-teal-400/20 border border-gray-700/50 hover:border-teal-400/50 rounded-xl transition-all duration-200 hover:scale-105"
+                title="LinkedIn"
               >
-                <Linkedin
-                  className="text-white md:group-hover:text-yellow-400 md:transition-colors md:duration-300 md:transform md:group-hover:scale-110 transition-none"
-                  size={28}
-                />
+                <Linkedin className="w-6 h-6 text-gray-300 group-hover:text-teal-400 transition-colors" />
               </a>
+
               <a
-                href="#"
-                className="p-2 rounded-full md:hover:bg-gray-800 md:transition-all md:duration-300 group transition-none mobile-touch-feedback"
+                href="https://instagram.com/yourusername"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group p-4 bg-gray-800/50 hover:bg-teal-400/20 border border-gray-700/50 hover:border-teal-400/50 rounded-xl transition-all duration-200 hover:scale-105"
+                title="Instagram"
               >
-                <Instagram
-                  className="text-white md:group-hover:text-yellow-400 md:transition-colors md:duration-300 md:transform md:group-hover:scale-110 transition-none"
-                  size={28}
-                />
+                <Instagram className="w-6 h-6 text-gray-300 group-hover:text-teal-400 transition-colors" />
               </a>
             </div>
+          </div>
 
-            {/* Desktop CTA Button - MOBILE: No transitions, DESKTOP: Smooth */}
-            <div className="hidden lg:block">
-              <button className="bg-yellow-400 text-black px-8 py-4 rounded-full font-semibold text-base lg:text-lg hover:bg-yellow-500 active:bg-yellow-600 transition-all duration-300 shadow-lg transform hover:scale-105 active:scale-95 mt-8">
-                Start a Project
-              </button>
+          {/* Response Time Indicator */}
+          <div className="mt-6 flex items-center justify-center">
+            <div className="flex items-center px-4 py-2 bg-teal-400/10 border border-teal-400/20 rounded-full">
+              <div className="w-2 h-2 bg-teal-400 rounded-full mr-3 animate-pulse"></div>
+              <span className="text-sm text-teal-300 font-medium">
+                Usually responds in 24h
+              </span>
             </div>
           </div>
         </div>
 
-        {/* Mobile Bottom Padding */}
-        <div className="h-8 lg:hidden"></div>
+        {/* Bottom Decoration */}
+        <div className="flex justify-center mt-8 sm:mt-12">
+          <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-teal-400/50 to-transparent rounded-full"></div>
+        </div>
       </div>
     </section>
   );

@@ -56,12 +56,13 @@ const Profile = () => (
             </h2>
             <p className="text-teal-400 font-semibold flex items-center gap-3 text-lg mb-4">
               <Zap className="w-5 h-5 animate-pulse" />
-              Passionate about building web and desktop applications
+              Passionate about crafting modern, user-friendly web and desktop
+              applications
             </p>
             <div className="flex flex-wrap gap-3">
               <div className="flex items-center gap-2 px-4 py-2 bg-teal-400/10 rounded-full border border-teal-400/20">
                 <MapPin className="w-4 h-4 text-teal-400" />
-                <span className="text-sm font-medium">Bandung, Indonesia</span>
+                <span className="text-sm font-medium">Riau, Indonesia</span>
               </div>
               <div className="flex items-center gap-2 px-4 py-2 bg-teal-400/10 rounded-full border border-teal-400/20">
                 <Globe className="w-4 h-4 text-teal-400" />
@@ -73,30 +74,25 @@ const Profile = () => (
 
         <div className="space-y-6">
           <p className="text-foreground/90 leading-relaxed text-lg">
-            I am a{" "}
+            {" "}
             <span className="text-teal-400 font-semibold bg-teal-400/10 px-2 py-1 rounded-lg">
               Fullstack Developer
             </span>{" "}
-            experienced in crafting modern, user-friendly applications using
-            cutting-edge technologies. With a Bachelor&apos;s degree in
-            Informatics from ITENAS Bandung, I bring both academic knowledge and
-            practical experience to every project.
-          </p>
-
-          <p className="text-foreground/80 leading-relaxed">
-            Skilled in both frontend and backend development, with strong{" "}
+            with hands-on experience in creating modern, user-focused web and
+            desktop applications using{" "}
             <span className="text-teal-400 font-semibold bg-teal-400/10 px-2 py-1 rounded-lg">
-              adaptability
-            </span>
-            ,{" "}
+              Next.js, React, Java, MySQL,
+            </span>{" "}
+            and{" "}
             <span className="text-teal-400 font-semibold bg-teal-400/10 px-2 py-1 rounded-lg">
-              attention to detail
-            </span>
-            , and a focus on delivering{" "}
-            <span className="text-teal-400 font-semibold bg-teal-400/10 px-2 py-1 rounded-lg">
-              efficient solutions
-            </span>
-            .
+              WordPress.
+            </span>{" "}
+            I combine strong technical expertise in both frontend and backend
+            development with a passion for clean UI/UX design and scalable
+            solutions. Adaptable and detail-oriented, I thrive in fast-paced
+            environments, delivering responsive, efficient, and visually
+            engaging applications that enhance user experience and meet business
+            goals.
           </p>
         </div>
       </div>
@@ -240,7 +236,10 @@ interface AboutSectionProps {
   onSubSectionChange?: (index: number) => void;
 }
 
-const AboutSection: React.FC<AboutSectionProps> = ({ onExitAbout }) => {
+const AboutSection: React.FC<AboutSectionProps> = ({
+  onExitAbout,
+  onSubSectionChange,
+}) => {
   const [currentSubSection, setCurrentSubSection] = useState(0);
   const isTransitioningRef = useRef(false);
   const aboutContainerRef = useRef<HTMLDivElement>(null);
@@ -276,6 +275,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({ onExitAbout }) => {
         if (nextIndex >= 0 && nextIndex < subSections.length) {
           isTransitioningRef.current = true;
           setCurrentSubSection(nextIndex);
+          onSubSectionChange?.(nextIndex);
           setTimeout(() => {
             isTransitioningRef.current = false;
           }, 700);
@@ -284,7 +284,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({ onExitAbout }) => {
         }
       }
     },
-    [currentSubSection, subSections, onExitAbout]
+    [currentSubSection, subSections, onExitAbout, onSubSectionChange]
   );
   const handleTouchStart = useCallback((e: TouchEvent) => {
     touchStartYRef.current = e.touches[0].clientY;
@@ -317,6 +317,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({ onExitAbout }) => {
         if (nextIndex >= 0 && nextIndex < subSections.length) {
           isTransitioningRef.current = true;
           setCurrentSubSection(nextIndex);
+          onSubSectionChange?.(nextIndex);
           setTimeout(() => {
             isTransitioningRef.current = false;
           }, 700);
@@ -327,7 +328,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({ onExitAbout }) => {
 
       touchStartYRef.current = null;
     },
-    [currentSubSection, subSections, onExitAbout]
+    [currentSubSection, subSections, onExitAbout, onSubSectionChange]
   );
 
   useEffect(() => {
@@ -384,6 +385,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({ onExitAbout }) => {
         />
         <div
           ref={contentRef}
+          data-about-content="true"
           className="max-w-6xl mx-auto flex-1 overflow-y-auto pb-48"
           style={{ height: "calc(100vh - 200px)" }}
         >

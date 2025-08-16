@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { StaticImageData } from "next/image";
+import Image from "next/image";
 import {
   Briefcase,
   Github,
@@ -8,13 +10,18 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
+import modisImg from "@/app/assets/MODIS.png";
+import plannerImg from "@/app/assets/PP.png";
+import CsImg1 from "@/app/assets/CS-1.jpg";
+import CsImg2 from "@/app/assets/CS-10.jpg";
+import CsImg3 from "@/app/assets/CS-11.jpg";
 
 interface Project {
   id: number;
   title: string;
   languages: string[];
   description: string;
-  image: string;
+  image: string | StaticImageData;
   category: string;
 }
 
@@ -26,53 +33,45 @@ const PortfolioSection = () => {
   const projects: Project[] = [
     {
       id: 1,
-      title: "E-Commerce Platform",
-      languages: ["JavaScript", "React", "Node.js", "MongoDB"],
+      title: "E-Modul MODIS",
+      languages: ["NextJs", "TypeScript", "TailwindCSS"],
       description:
-        "Full-stack e-commerce platform dengan integrasi pembayaran yang aman, manajemen inventori, dan dashboard admin yang komprehensif.",
-      image:
-        "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=500&fit=crop",
-      category: "Full Stack",
+        "Developed the frontend of a web-based educational module designed for teachers. I was responsible for creating the landing page, e-module layout, and interface design, ensuring a responsive and intuitive experience. The platform helps teachers deliver sexual education materials effectively to students with visual impairments through accessible and well-structured content.",
+      image: modisImg,
+      category: "Frontend",
     },
     {
       id: 2,
-      title: "Analytics Dashboard",
-      languages: ["TypeScript", "React", "Chart.js", "D3.js"],
+      title: "Project Planner",
+      languages: ["JavaScript", "HTML5", "CSS3"],
       description:
-        "Dashboard analitik real-time dengan visualisasi data interaktif, grafik dinamis, dan laporan mendalam untuk pengambilan keputusan strategis.",
-      image:
-        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop",
+        "Developed a web-based dashboard to manage multiple projects with key metrics such as total projects, duration, tech stack, and average timeline. The platform features project cards highlighting scope, workflow, data sources, and core functionalities. I was responsible for designing and implementing the frontend interface, ensuring a clean, responsive, and visually engaging layout that simplifies project tracking and management.",
+      image: plannerImg,
       category: "Frontend",
     },
     {
       id: 3,
-      title: "Mobile Banking App",
-      languages: ["React Native", "TypeScript", "Firebase"],
-      description:
-        "Aplikasi mobile banking yang aman dengan autentikasi biometrik, transfer uang real-time, dan monitoring transaksi.",
-      image:
-        "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&h=500&fit=crop",
-      category: "Mobile",
+      title: "Comming Soon",
+      languages: ["CommingSoon", "CommingSoon", "CommingSoon"],
+      description: "PROJECT COMMING SOON.",
+      image: CsImg1,
+      category: "CommingSoon",
     },
     {
       id: 4,
-      title: "Task Management System",
-      languages: ["Vue.js", "Python", "Django", "PostgreSQL"],
-      description:
-        "Sistem manajemen tugas kolaboratif dengan workflow tim, assignment tracking, dan progress monitoring untuk multiple projects.",
-      image:
-        "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=800&h=500&fit=crop",
-      category: "Full Stack",
+      title: "CommingSoon",
+      languages: ["CommingSoon", "CommingSoon", "CommingSoon", "CommingSoon"],
+      description: "PROJECT COMMING SOON.",
+      image: CsImg2,
+      category: "CommingSoon",
     },
     {
       id: 5,
-      title: "AI Chat Bot",
-      languages: ["Python", "TensorFlow", "FastAPI", "React"],
-      description:
-        "Chatbot AI dengan pemrosesan bahasa alami, machine learning untuk respons yang lebih akurat, dan integrasi dengan multiple platforms.",
-      image:
-        "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=500&fit=crop",
-      category: "AI/ML",
+      title: "CommingSoon",
+      languages: ["CommingSoon", "CommingSoon", "CommingSoon", "CommingSoon"],
+      description: "PROJECT COMMING SOON.",
+      image: CsImg3,
+      category: "CommingSoon",
     },
   ];
 
@@ -147,6 +146,7 @@ const PortfolioSection = () => {
       "D3.js": "bg-red-400",
       TensorFlow: "bg-orange-600",
       FastAPI: "bg-teal-600",
+      CommingSoon: "bg-white",
     };
     return colors[language] || "bg-gray-500";
   };
@@ -259,9 +259,11 @@ const PortfolioSection = () => {
                   <div className="flex flex-col h-full">
                     {/* IMAGE */}
                     <div className="h-48 sm:h-56 lg:h-64 relative overflow-hidden flex-shrink-0">
-                      <img
+                      <Image
                         src={project.image}
                         alt={project.title}
+                        width={800}
+                        height={500}
                         className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
@@ -277,9 +279,9 @@ const PortfolioSection = () => {
                       </h3>
 
                       <div className="flex flex-wrap gap-2">
-                        {project.languages.map((lang) => (
+                        {project.languages.map((lang, idx) => (
                           <span
-                            key={lang}
+                            key={`${lang}-${idx}`}
                             className={`${getLanguageColor(
                               lang
                             )} px-3 py-1 rounded-full text-xs font-medium text-white shadow-sm`}
