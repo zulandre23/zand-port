@@ -23,6 +23,7 @@ interface Project {
   description: string;
   image: string | StaticImageData;
   category: string;
+  demoLink?: string;
 }
 
 const PortfolioSection = () => {
@@ -39,6 +40,7 @@ const PortfolioSection = () => {
         "Developed the frontend of a web-based educational module designed for teachers. I was responsible for creating the landing page, e-module layout, and interface design, ensuring a responsive and intuitive experience. The platform helps teachers deliver sexual education materials effectively to students with visual impairments through accessible and well-structured content.",
       image: modisImg,
       category: "Frontend",
+      demoLink: "https://education-module.vercel.app/",
     },
     {
       id: 2,
@@ -48,6 +50,7 @@ const PortfolioSection = () => {
         "Developed a web-based dashboard to manage multiple projects with key metrics such as total projects, duration, tech stack, and average timeline. The platform features project cards highlighting scope, workflow, data sources, and core functionalities. I was responsible for designing and implementing the frontend interface, ensuring a clean, responsive, and visually engaging layout that simplifies project tracking and management.",
       image: plannerImg,
       category: "Frontend",
+      demoLink: "https://project-planner-zand-zone.vercel.app/",
     },
     {
       id: 3,
@@ -300,10 +303,17 @@ const PortfolioSection = () => {
                           <Github size={16} />
                           <span>View Code</span>
                         </button>
-                        <button className="border-2 border-teal-400/50 hover:border-teal-400 hover:bg-teal-400/10 px-6 py-3 rounded-xl flex items-center justify-center gap-2 font-semibold transition-all duration-300">
-                          <ExternalLink size={16} />
-                          <span>Live Demo</span>
-                        </button>
+                        {project.demoLink && (
+                          <a
+                            href={project.demoLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="border-2 border-teal-400/50 hover:border-teal-400 hover:bg-teal-400/10 px-6 py-3 rounded-xl flex items-center justify-center gap-2 font-semibold transition-all duration-300"
+                          >
+                            <ExternalLink size={16} />
+                            <span>Live Demo</span>
+                          </a>
+                        )}
                       </div>
                     </div>
                   </div>
