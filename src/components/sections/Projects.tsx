@@ -1,8 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ArrowUpRight,
+  Pause,
+  Play,
+} from "lucide-react";
 import { projects } from "@/data/projects";
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
@@ -10,8 +16,32 @@ import { Card } from "@/components/ui/Card";
 export function Projects() {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAutoplayEnabled, setIsAutoplayEnabled] = useState(true);
+  const [isInteractionPaused, setIsInteractionPaused] = useState(false);
+  const [isPageVisible, setIsPageVisible] = useState(true);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
-  const scrollToProject = (index: number) => {
+  useEffect(() => {
+    const motionPreference = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    );
+    const updateMotionPreference = () =>
+      setPrefersReducedMotion(motionPreference.matches);
+    const updateVisibility = () =>
+      setIsPageVisible(document.visibilityState === "visible");
+
+    updateMotionPreference();
+    updateVisibility();
+    motionPreference.addEventListener("change", updateMotionPreference);
+    document.addEventListener("visibilitychange", updateVisibility);
+
+    return () => {
+      motionPreference.removeEventListener("change", updateMotionPreference);
+      document.removeEventListener("visibilitychange", updateVisibility);
+    };
+  }, []);
+
+  const scrollToProject = useCallback((index: number) => {
     const carousel = carouselRef.current;
     if (!carousel) return;
 
@@ -23,12 +53,47 @@ export function Projects() {
         : "smooth",
     });
     setCurrentIndex(nextIndex);
-  };
+  }, []);
+
+  useEffect(() => {
+    if (
+      !isAutoplayEnabled ||
+      isInteractionPaused ||
+      !isPageVisible ||
+      prefersReducedMotion ||
+      projects.length < 2
+    ) {
+      return;
+    }
+
+    const interval = window.setInterval(() => {
+      scrollToProject(currentIndex + 1);
+    }, 5000);
+
+    return () => window.clearInterval(interval);
+  }, [
+    currentIndex,
+    isAutoplayEnabled,
+    isInteractionPaused,
+    isPageVisible,
+    prefersReducedMotion,
+    scrollToProject,
+  ]);
 
   return (
     <Section id="projects" title="Selected projects" eyebrow="03 / Work">
       {projects.length > 0 ? (
-        <div className="projects-carousel">
+        <div
+          className="projects-carousel"
+          onMouseEnter={() => setIsInteractionPaused(true)}
+          onMouseLeave={() => setIsInteractionPaused(false)}
+          onFocusCapture={() => setIsInteractionPaused(true)}
+          onBlurCapture={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget)) {
+              setIsInteractionPaused(false);
+            }
+          }}
+        >
           <div
             ref={carouselRef}
             className="project-carousel"
@@ -99,6 +164,25 @@ export function Projects() {
             </div>
           </div>
           <div className="project-carousel-controls">
+            {projects.length > 1 && (
+              <button
+                type="button"
+                className="icon-button"
+                aria-label={
+                  isAutoplayEnabled
+                    ? "Pause project autoplay"
+                    : "Play project autoplay"
+                }
+                aria-pressed={isAutoplayEnabled}
+                onClick={() => setIsAutoplayEnabled((enabled) => !enabled)}
+              >
+                {isAutoplayEnabled ? (
+                  <Pause size={18} aria-hidden="true" />
+                ) : (
+                  <Play size={18} aria-hidden="true" />
+                )}
+              </button>
+            )}
             <button
               type="button"
               className="icon-button"
