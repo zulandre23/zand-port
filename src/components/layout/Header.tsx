@@ -1,7 +1,9 @@
 "use client";
 
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
 import { useState } from "react";
+import Logo from "@/app/assets/ZZ-NO-BG.png";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 
 export type SectionLink = {
@@ -37,7 +39,15 @@ export function Header({
           navigate(0);
         }}
       >
-        <span aria-hidden="true">Z</span>
+        <span className="brand-logo-frame" aria-hidden="true">
+          <Image
+            src={Logo}
+            alt=""
+            width={128}
+            height={128}
+            className="brand-logo-image"
+          />
+        </span>
         ZAND
       </a>
       <nav

@@ -5,6 +5,8 @@ import {
   Linkedin,
   Mail,
 } from "lucide-react";
+import Image from "next/image";
+import Logo from "@/app/assets/ZZ-NO-BG.png";
 import { profile } from "@/data/profile";
 import { Section } from "@/components/ui/Section";
 
@@ -58,7 +60,15 @@ export function Contact() {
         </div>
         <footer className="contact-footer">
           <div>
-            <span className="contact-footer-mark">[Z]</span>
+            <span className="brand-logo-frame contact-footer-mark">
+              <Image
+                src={Logo}
+                alt=""
+                width={128}
+                height={128}
+                className="brand-logo-image"
+              />
+            </span>
             <p className="eyebrow">{profile.name}</p>
             <h3>{profile.role}</h3>
           </div>

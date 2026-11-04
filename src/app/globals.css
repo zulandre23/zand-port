@@ -233,15 +233,29 @@ h3 {
   letter-spacing: 0.08em;
 }
 
-.brand-mark span:first-child {
+.brand-logo-frame {
   display: grid;
   width: 2rem;
-  aspect-ratio: 1;
+  height: 2rem;
+  flex: 0 0 auto;
+  overflow: hidden;
   place-items: center;
   border: 1px solid var(--accent);
-  border-radius: 0.55rem;
-  color: var(--accent);
+  border-radius: 50%;
+  background: var(--surface);
   box-shadow: 0 0 1.25rem var(--glow);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.brand-logo-frame:hover {
+  box-shadow: 0 0 2rem var(--glow), inset 0 0 1rem var(--glow);
+  transform: rotate(6deg) scale(1.08);
+}
+
+.brand-logo-image {
+  width: 68%;
+  height: 68%;
+  object-fit: contain;
 }
 
 .header-actions,
@@ -503,6 +517,17 @@ h3 {
   padding-bottom: 1.75rem;
 }
 
+#contact .panel-scroll,
+#contact .section-content {
+  display: flex;
+  flex-direction: column;
+}
+
+#contact .section-content {
+  width: 100%;
+  min-height: 100%;
+}
+
 .badge {
   display: inline-flex;
   align-items: center;
@@ -562,6 +587,19 @@ h3 {
   border-radius: 999px;
   color: var(--muted);
   font-size: 0.75rem;
+}
+
+.tag-list .technology-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.65rem;
+  border-radius: 0.65rem;
+}
+
+.technology-chip svg {
+  flex: 0 0 auto;
+  color: var(--accent);
 }
 
 .scroller-footer {
@@ -676,6 +714,8 @@ h3 {
 
 .contact-mondrian-layout {
   display: grid;
+  flex: 1;
+  min-height: 0;
   grid-template-columns: minmax(0, 1fr) minmax(13rem, 0.28fr);
   gap: clamp(1rem, 2.5vw, 2.25rem);
   align-items: stretch;
@@ -773,15 +813,9 @@ h3 {
 }
 
 .contact-footer-mark {
-  display: grid;
   width: 3rem;
   height: 3rem;
   margin-bottom: 1rem;
-  place-items: center;
-  border: 1px solid var(--accent);
-  color: var(--accent);
-  font-family: var(--font-display), sans-serif;
-  font-weight: 700;
 }
 
 .contact-footer h3 {
@@ -863,6 +897,7 @@ h3 {
   }
 
   .contact-mondrian-layout {
+    flex: initial;
     grid-template-columns: 1fr;
   }
 
