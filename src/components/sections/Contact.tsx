@@ -8,6 +8,8 @@ import {
 import { profile } from "@/data/profile";
 import { Section } from "@/components/ui/Section";
 
+const builtWith = ["Next.js", "TypeScript", "Tailwind CSS"];
+
 const socialIcons = {
   GitHub: Github,
   LinkedIn: Linkedin,
@@ -15,34 +17,63 @@ const socialIcons = {
 };
 
 export function Contact() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <Section id="contact" title="Let’s connect" eyebrow="06 / Contact">
-      <p className="panel-intro">
-        Have a project or opportunity in mind? Find me through these channels.
-      </p>
-      <div className="contact-list">
-        <a className="surface-card contact-link" href={`mailto:${profile.email}`}>
-          <Mail size={18} aria-hidden="true" />
-          <span>Email</span>
-          <ArrowUpRight size={16} aria-hidden="true" />
-        </a>
-        {profile.socials.map((social) => {
-          const Icon = socialIcons[social.label];
-
-          return (
+      <div className="contact-mondrian-layout">
+        <div className="contact-main">
+          <p className="panel-intro">
+            Have a project or opportunity in mind? Find me through these
+            channels.
+          </p>
+          <div className="contact-mondrian">
             <a
-              className="surface-card contact-link"
-              href={social.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              key={social.label}
+              className="contact-tile contact-email"
+              href={`mailto:${profile.email}`}
             >
-              <Icon size={18} aria-hidden="true" />
-              <span>{social.label}</span>
-              <ArrowUpRight size={16} aria-hidden="true" />
+              <Mail size={24} aria-hidden="true" />
+              <span>Email</span>
+              <strong>{profile.email}</strong>
+              <ArrowUpRight size={18} aria-hidden="true" />
             </a>
-          );
-        })}
+            {profile.socials.map((social) => {
+              const Icon = socialIcons[social.label];
+
+              return (
+                <a
+                  className={`contact-tile contact-${social.label.toLowerCase()}`}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  key={social.label}
+                >
+                  <Icon size={22} aria-hidden="true" />
+                  <span>{social.label}</span>
+                  <ArrowUpRight size={16} aria-hidden="true" />
+                </a>
+              );
+            })}
+          </div>
+        </div>
+        <footer className="contact-footer">
+          <div>
+            <span className="contact-footer-mark">[Z]</span>
+            <p className="eyebrow">{profile.name}</p>
+            <h3>{profile.role}</h3>
+          </div>
+          <div className="contact-footer-stack">
+            <p className="eyebrow">Built with</p>
+            <ul className="tag-list">
+              {builtWith.map((technology) => (
+                <li key={technology}>{technology}</li>
+              ))}
+            </ul>
+          </div>
+          <p className="contact-copyright">
+            © {currentYear} {profile.name}
+          </p>
+        </footer>
       </div>
     </Section>
   );

@@ -6,6 +6,8 @@ Portfolio personal ZAND untuk menampilkan profil, project, keahlian, pengalaman,
 
 - Panel horizontal dengan scroll-snap, navigasi tombol, indikator posisi, serta dukungan keyboard dan swipe.
 - Carousel project dengan kontrol navigasi dan swipe.
+- Skills dikelompokkan menjadi Frontend, Backend/BaaS, Integration & Tools, dan Familiar.
+- Contact menggunakan grid Mondrian dengan footer profil di sisi kanan.
 - Tema light/dark mengikuti preferensi sistem; pilihan manual tersimpan.
 - Data project, profil, stack, dan pengalaman dikelola terpisah dari komponen.
 - Metadata Open Graph/Twitter, sitemap, robots, dan gambar sosial otomatis.
