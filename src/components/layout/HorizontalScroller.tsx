@@ -2,6 +2,7 @@
 
 import {
   type KeyboardEvent,
+  type PointerEvent as ReactPointerEvent,
   type ReactNode,
   useCallback,
   useEffect,
@@ -22,6 +23,13 @@ type Panel = SectionLink & {
   content: ReactNode;
 };
 
+type DragState = {
+  pointerId: number;
+  startX: number;
+  startScrollLeft: number;
+  moved: boolean;
+};
+
 const sections: SectionLink[] = [
   { id: "home", title: "Home" },
   { id: "about", title: "About" },
@@ -34,6 +42,7 @@ const sections: SectionLink[] = [
 export function HorizontalScroller() {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const currentSectionRef = useRef(0);
+  const dragRef = useRef<DragState | null>(null);
   const [currentSection, setCurrentSection] = useState(0);
   const [showWelcome, setShowWelcome] = useState(true);
   const dismissWelcome = useCallback(() => setShowWelcome(false), []);
@@ -137,6 +146,50 @@ export function HorizontalScroller() {
     }
   };
 
+  const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== "mouse" || event.button !== 0) return;
+    if (!(event.target instanceof Element)) return;
+    if (event.target.closest("a, button, input, textarea, select, [contenteditable]")) {
+      return;
+    }
+
+    dragRef.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startScrollLeft: event.currentTarget.scrollLeft,
+      moved: false,
+    };
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const drag = dragRef.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+
+    const delta = event.clientX - drag.startX;
+    if (!drag.moved && Math.abs(delta) < 4) return;
+
+    if (!drag.moved) {
+      drag.moved = true;
+      event.currentTarget.classList.add("is-dragging");
+      window.getSelection()?.removeAllRanges();
+    }
+
+    event.preventDefault();
+    event.currentTarget.scrollLeft = drag.startScrollLeft - delta;
+  };
+
+  const handlePointerEnd = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const drag = dragRef.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+
+    dragRef.current = null;
+    event.currentTarget.classList.remove("is-dragging");
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+  };
+
   return (
     <div className="portfolio-shell">
       <Header
@@ -153,6 +206,10 @@ export function HorizontalScroller() {
         aria-label="Portfolio panels. Use the arrow keys to navigate."
         onScroll={handleScroll}
         onKeyDown={handleKeyDown}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerEnd}
+        onPointerCancel={handlePointerEnd}
       >
         {panels.map((panel) => (
           <div className="panel-slot" key={panel.id}>

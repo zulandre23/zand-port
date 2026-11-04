@@ -342,10 +342,18 @@ h3 {
   height: 100%;
   overflow-x: auto;
   overflow-y: hidden;
+  cursor: grab;
   overscroll-behavior-x: contain;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
+}
+
+.horizontal-scroller.is-dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+  scroll-snap-type: none;
+  user-select: none;
 }
 
 .horizontal-scroller::-webkit-scrollbar {
