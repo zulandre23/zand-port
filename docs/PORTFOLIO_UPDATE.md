@@ -289,6 +289,7 @@ Audit dan rencana dilakukan sebelum implementasi. Audit awal dicatat di Lampiran
 | `4ea8474` | Penyamaan logo dan ikon Stack | Menggunakan logo yang sama di header/footer dengan animasi hanya saat hover, memenuhi tinggi area footer Contact desktop, dan menambahkan ikon pada semua teknologi Stack. |
 | `8247fd0` | Menambahkan drag mouse | Menambahkan drag pada area non-interaktif horizontal scroller desktop tanpa mengganti scroll-snap, wheel, atau swipe sentuh. |
 | `6c96f51` | Upgrade Next.js ke versi patched | Memperbarui Next.js ke 15.5.29 beserta lockfile; lint/build lulus dan perubahan dipush ke branch redesign. |
+| `5634012` | Meningkatkan visibilitas logo di dark mode | Menambahkan token latar mint terang untuk bidang logo pada Home, header, footer, dan cover; latar di light mode tetap putih. |
 
 Perubahan konten yang belum disebut sebagai commit terpisah, termasuk penghapusan Case Study berdasarkan permintaan pemilik, masuk pada commit revisi Projects/Contact. Project yang ditampilkan sekarang tetap memakai satu sumber data bertipe di `src/data/projects.ts`.
 
