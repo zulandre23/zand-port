@@ -6,11 +6,22 @@ Bagian bertanda **TODO** diisi oleh pemilik repo sebelum/selama pengerjaan.
 ---
 
 ## 1. Tujuan
+
 - Memperbarui kode dan me-redesign tampilan portfolio agar modern, cepat, dan mudah dirawat.
 - Target pembaca: recruiter dan hiring manager untuk posisi developer (fullstack/frontend), juga calon klien freelance.
 - Hasil akhir: pengunjung paham siapa pemiliknya, apa keahliannya, dan melihat bukti kerjanya dalam waktu kurang dari 1 menit.
 
+## 1a. Keputusan Final (mengalahkan bagian lain jika ada konflik)
+
+- **Aksen warna: pertahankan teal/cyan.** Di light mode pakai versi lebih gelap (mis. `teal-700`) untuk teks dan tombol agar kontras lolos WCAG AA; cyan terang hanya untuk dark mode.
+- **Section tambahan yang dibangun: Experience dan Case Study.** Tidak ada section Sertifikasi, Testimonials, atau Blog untuk saat ini.
+- **Tidak ada tombol/section Download CV.** Jangan menambah file CV atau folder `public/cv/`.
+- **Contact:** pertahankan tautan kontak yang sudah ada dan tambahkan Instagram: https://www.instagram.com/zuuulllll_/ (simpan di `src/data/profile.ts`, buka di tab baru dengan `rel="noopener noreferrer"`).
+- **Placeholder "Coming Soon" dihapus dari data project.** Jika perlu kesan "segera hadir", buat satu kartu penutup di komponen, bukan di `projects.ts`.
+- **Horizontal scroll: jangan tulis ulang logika yang sudah berjalan.**
+
 ## 2. Kondisi Saat Ini
+
 Diamati dari halaman repo (isi `src/` belum diaudit):
 
 - Stack: Next.js, TypeScript, Tailwind CSS, ESLint
@@ -25,6 +36,7 @@ Diamati dari halaman repo (isi `src/` belum diaudit):
 ## 3. Kebutuhan Wajib
 
 ### 3.1 Pertahankan Horizontal Scroll
+
 - Layout horizontal scroll yang ada sekarang HARUS tetap ada.
 - Tahap audit: identifikasi implementasinya (CSS scroll-snap, transform, library, atau handler wheel/scroll). Jangan ganti pendekatan kecuali ada bug nyata.
 - Setiap section = satu panel horizontal.
@@ -38,6 +50,7 @@ Diamati dari halaman repo (isi `src/` belum diaudit):
 - Jika di layar sempit horizontal scroll tidak nyaman, usulkan fallback vertikal dan minta persetujuan (jangan langsung dihapus).
 
 ### 3.2 Mudah Menambah Project
+
 - Semua project bersumber dari SATU file data bertipe: `src/data/projects.ts`.
 - Menambah project = (1) taruh gambar di `public/projects/<slug>/`, (2) tambah satu objek di array. Tidak ada perubahan di komponen UI.
 - Field wajib vs opsional divalidasi lewat TypeScript.
@@ -45,6 +58,7 @@ Diamati dari halaman repo (isi `src/` belum diaudit):
 - Panduan "Cara menambah project" ada di bagian 8 dan di `README.md`.
 
 ### 3.3 Dual Mode (Dark & Light)
+
 - Gunakan `next-themes` (atau solusi setara yang ringan).
 - Default mengikuti sistem; ada toggle manual; pilihan tersimpan.
 - Tidak boleh ada flash tema yang salah saat load.
@@ -55,39 +69,42 @@ Diamati dari halaman repo (isi `src/` belum diaudit):
   - v4: `@custom-variant dark (&:where(.dark, .dark *));` di CSS utama
 
 ## 4. Arah Desain (isi/ubah sesuai selera)
+
 - Gaya: **TODO** (minimalis modern / bold / editorial / dark-first)
-- Warna: 1 warna aksen + netral. Aksen: **TODO**
+- Warna: aksen teal/cyan (dipertahankan), netral untuk sisanya. Light mode memakai teal yang lebih gelap untuk kontras
 - Tipografi: **TODO** (contoh: Geist atau Inter untuk teks, 1 font display) — pakai `next/font`
 - Referensi portfolio yang disukai: **TODO** (tempel 2–3 link)
 - Animasi: halus dan ringan; tidak boleh mengorbankan performa
 - Bentuk komponen: **TODO** (sudut membulat / tajam, bayangan / border)
 
 ## 5. Struktur Panel (Urutan Horizontal)
+
 1. **Hero** — nama, peran, 1 kalimat value, CTA (Lihat Project, Kontak)
 2. **About** — 3–5 kalimat + status ketersediaan ("Open to work": fulltime/freelance/remote)
-3. **Featured Projects** — 2–3 project terbaik dengan cerita singkat (masalah, peran, solusi, hasil)
+3. **Featured Projects / Case Study** — project asli terbaik dengan cerita singkat (masalah, peran, solusi, hasil)
 4. **All Projects** — grid/daftar semua project dari `projects.ts` (bisa filter berdasarkan stack)
 5. **Tech Stack** — dikelompokkan: Frontend, Backend, Database, Tools
 6. **Experience** — timeline pengalaman kerja/freelance (hanya yang boleh ditampilkan)
 7. **Process** (opsional) — 3–4 langkah cara kerja, cocok untuk calon klien
-8. **Contact** — email, GitHub, LinkedIn, tombol Download CV
+8. **Contact** — tautan kontak yang sudah ada + Instagram (https://www.instagram.com/zuuulllll_/). Tanpa tombol Download CV
 
-Section opsional jika kontennya ada: Education & Certifications, Testimonials (hanya kutipan asli), Blog/Catatan Teknis.
+Section tambahan yang dibangun: Experience dan Case Study. Education/Sertifikasi, Testimonials, dan Blog tidak dibuat untuk saat ini.
 Jangan terlalu banyak panel; tiap panel harus menambah nilai.
 
 ## 6. Konten yang Harus Disiapkan Pemilik
+
 - [ ] Foto/avatar profesional → `public/images/avatar.*`
 - [ ] Teks About (versi singkat)
 - [ ] Daftar project terbaik (3–6), masing-masing: judul, masalah yang diselesaikan, peran, tech stack, link demo, link repo, screenshot
 - [ ] Pengalaman kerja/freelance (yang tidak terikat NDA)
-- [ ] CV terbaru (PDF) → `public/cv/`
-- [ ] Tautan sosial (email, GitHub, LinkedIn)
+- [ ] Tautan kontak (yang sudah ada) + Instagram: https://www.instagram.com/zuuulllll_/
 
 Jika konten belum tersedia, agent memakai placeholder bertanda `TODO`, bukan mengarang.
 
 ## 7. Arsitektur Teknis
 
 ### 7.1 Struktur target (sesuaikan dengan `src/app` atau `src/pages` yang sudah ada)
+
 ```
 src/
   app/                    # halaman, layout, metadata
@@ -107,31 +124,32 @@ src/
 public/
   projects/<slug>/cover.png
   images/
-  cv/
 docs/
   PORTFOLIO_UPDATE.md
   AGENT_PROMPT.md
 ```
 
 ### 7.2 Type Project
+
 ```ts
 // src/types/index.ts
 export type Project = {
-  slug: string;             // unik, huruf kecil + tanda hubung
+  slug: string; // unik, huruf kecil + tanda hubung
   title: string;
-  summary: string;          // 1–2 kalimat
+  summary: string; // 1–2 kalimat
   role?: string;
   stack: string[];
-  image?: string;           // /projects/<slug>/cover.png
+  image?: string; // /projects/<slug>/cover.png
   demoUrl?: string;
   repoUrl?: string;
-  featured?: boolean;       // tampil di panel Featured
+  featured?: boolean; // tampil di panel Featured
   year?: number;
   status?: "live" | "wip" | "archived";
 };
 ```
 
 ### 7.3 Contoh data
+
 ```ts
 // src/data/projects.ts
 import type { Project } from "@/types";
@@ -153,6 +171,7 @@ export const projects: Project[] = [
 ```
 
 ### 7.4 Design token (contoh, sesuaikan)
+
 ```css
 :root {
   --bg: #ffffff;
@@ -171,9 +190,11 @@ export const projects: Project[] = [
   --accent: #818cf8;
 }
 ```
+
 Komponen memakai token ini (mis. `bg-[var(--bg)]` atau mapping ke theme Tailwind), bukan warna langsung.
 
 ## 8. Cara Menambah Project (untuk README)
+
 1. Buat folder `public/projects/<slug>/` dan taruh `cover.png` (disarankan rasio 16:9, maksimal ~300 KB).
 2. Buka `src/data/projects.ts`, tambahkan satu objek `Project` baru.
 3. Jalankan `npm run dev`, cek di panel Projects.
@@ -182,6 +203,7 @@ Komponen memakai token ini (mis. `bg-[var(--bg)]` atau mapping ke theme Tailwind
 Opsional: skrip `npm run new:project -- <slug>` (di `scripts/new-project.mjs`) yang membuat folder gambar dan menambahkan template entri.
 
 ## 9. SEO & Performa
+
 - [ ] Metadata per halaman (title, description) lewat Next.js Metadata API
 - [ ] Open Graph + Twitter image
 - [ ] `sitemap.xml` dan `robots.txt`
@@ -190,6 +212,7 @@ Opsional: skrip `npm run new:project -- <slug>` (di `scripts/new-project.mjs`) y
 - [ ] Hindari JavaScript berlebih di panel yang statis
 
 ## 10. Aksesibilitas
+
 - [ ] Heading berurutan (satu `h1`)
 - [ ] Alt text untuk gambar bermakna
 - [ ] Fokus keyboard terlihat; navigasi horizontal bisa dipakai tanpa mouse
@@ -198,6 +221,7 @@ Opsional: skrip `npm run new:project -- <slug>` (di `scripts/new-project.mjs`) y
 - [ ] Animasi menghormati `prefers-reduced-motion`
 
 ## 11. Alur Git
+
 1. `git checkout main && git pull`
 2. `git checkout -b redesign/portfolio-v2`
 3. Satu commit per langkah kecil (Conventional Commits)
@@ -206,6 +230,7 @@ Opsional: skrip `npm run new:project -- <slug>` (di `scripts/new-project.mjs`) y
 6. Merge ke `main` setelah semua checklist di bagian 12 lolos
 
 ## 12. Definition of Done
+
 - [ ] Horizontal scroll tetap berfungsi (desktop, mobile, keyboard)
 - [ ] Menambah project hanya perlu edit `projects.ts` + taruh gambar
 - [ ] Dark dan light mode berfungsi tanpa flash, kontras lolos
@@ -217,6 +242,7 @@ Opsional: skrip `npm run new:project -- <slug>` (di `scripts/new-project.mjs`) y
 - [ ] Lighthouse sesuai target
 
 ## 13. Larangan untuk Agent
+
 - Jangan mengarang data pribadi, perusahaan, angka, atau testimoni.
 - Jangan mengganti mekanisme horizontal scroll tanpa persetujuan.
 - Jangan menambah library besar tanpa alasan tertulis.
@@ -226,7 +252,8 @@ Opsional: skrip `npm run new:project -- <slug>` (di `scripts/new-project.mjs`) y
 ---
 
 ## Lampiran A — Hasil Audit (diisi agent di Tahap 1)
-- Versi: Next.js __ / React __ / Tailwind __
-- Mekanisme horizontal scroll saat ini: __
-- Konfigurasi yang dipakai (PostCSS/Tailwind): __
-- Daftar temuan + prioritas: __
+
+- Versi: Next.js ** / React ** / Tailwind \_\_
+- Mekanisme horizontal scroll saat ini: \_\_
+- Konfigurasi yang dipakai (PostCSS/Tailwind): \_\_
+- Daftar temuan + prioritas: \_\_
