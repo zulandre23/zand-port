@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Logo from "@/app/assets/ZZ-NO-BG.png";
 
 type WelcomeCoverProps = {
@@ -10,20 +10,18 @@ type WelcomeCoverProps = {
 
 export function WelcomeCover({ onComplete }: WelcomeCoverProps) {
   const [isExiting, setIsExiting] = useState(false);
-  const skipButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    skipButtonRef.current?.focus();
     const reducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
     const timer = window.setTimeout(
       () => setIsExiting(true),
-      reducedMotion ? 900 : 3900
+      reducedMotion ? 500 : 2200
     );
     const exitTimer = window.setTimeout(
       onComplete,
-      reducedMotion ? 1100 : 4400
+      reducedMotion ? 750 : 2450
     );
 
     return () => {
@@ -57,17 +55,6 @@ export function WelcomeCover({ onComplete }: WelcomeCoverProps) {
         </h1>
         <p className="welcome-cover-caption">Design. Develop. Deliver.</p>
       </div>
-      <button
-        ref={skipButtonRef}
-        type="button"
-        className="welcome-cover-skip"
-        onClick={() => {
-          setIsExiting(true);
-          window.setTimeout(onComplete, 350);
-        }}
-      >
-        Skip intro
-      </button>
     </div>
   );
 }
