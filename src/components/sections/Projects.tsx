@@ -1,11 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
 import {
-  ArrowLeft,
-  ArrowRight,
+  type CSSProperties,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import {
+  ArrowDown,
   ArrowUpRight,
+  ArrowUp,
   Pause,
   Play,
 } from "lucide-react";
@@ -14,7 +20,7 @@ import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
 
 export function Projects() {
-  const carouselRef = useRef<HTMLDivElement>(null);
+  const touchStartY = useRef<number | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoplayEnabled, setIsAutoplayEnabled] = useState(true);
   const [isInteractionPaused, setIsInteractionPaused] = useState(false);
@@ -42,16 +48,7 @@ export function Projects() {
   }, []);
 
   const scrollToProject = useCallback((index: number) => {
-    const carousel = carouselRef.current;
-    if (!carousel) return;
-
     const nextIndex = (index + projects.length) % projects.length;
-    carousel.scrollTo({
-      left: nextIndex * carousel.clientWidth,
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-        ? "auto"
-        : "smooth",
-    });
     setCurrentIndex(nextIndex);
   }, []);
 
@@ -85,6 +82,9 @@ export function Projects() {
       {projects.length > 0 ? (
         <div
           className="projects-carousel"
+          role="group"
+          aria-roledescription="carousel"
+          aria-label="Projects"
           onMouseEnter={() => setIsInteractionPaused(true)}
           onMouseLeave={() => setIsInteractionPaused(false)}
           onFocusCapture={() => setIsInteractionPaused(true)}
@@ -94,27 +94,38 @@ export function Projects() {
             }
           }}
         >
-          <div
-            ref={carouselRef}
-            className="project-carousel"
-            aria-label="Projects carousel"
-            onScroll={(event) => {
-              const carousel = event.currentTarget;
-              if (!carousel.clientWidth) return;
-              setCurrentIndex(
-                Math.min(
-                  projects.length - 1,
-                  Math.max(0, Math.round(carousel.scrollLeft / carousel.clientWidth))
-                )
-              );
+        <div
+          className="project-carousel"
+            onTouchStart={(event) => {
+              touchStartY.current = event.touches[0]?.clientY ?? null;
+            }}
+            onTouchEnd={(event) => {
+              if (touchStartY.current === null) return;
+              const deltaY = touchStartY.current - event.changedTouches[0].clientY;
+              if (Math.abs(deltaY) > 40) {
+                scrollToProject(currentIndex + (deltaY > 0 ? 1 : -1));
+              }
+              touchStartY.current = null;
             }}
           >
             <div className="project-carousel-track">
-              {projects.map((project, index) => (
+              {[-1, 0, 1].map((offset) => {
+                const index =
+                  (currentIndex + offset + projects.length) % projects.length;
+                const project = projects[index];
+
+                return (
                 <article
-                  className="project-slide"
-                  key={project.slug}
+                  className={`project-slide${offset === 0 ? " is-active" : ""}`}
+                  key={`${offset}-${project.slug}`}
+                  style={
+                    {
+                      "--slide-offset": `${offset * 70}%`,
+                    } as CSSProperties
+                  }
+                  aria-hidden={offset !== 0}
                   aria-label={`${project.title}, project ${index + 1} of ${projects.length}`}
+                  inert={offset !== 0}
                 >
                   <Card className="project-card">
                     {project.image ? (
@@ -160,7 +171,8 @@ export function Projects() {
                     </ul>
                   </Card>
                 </article>
-              ))}
+                );
+              })}
             </div>
           </div>
           <div className="project-carousel-controls">
@@ -189,7 +201,7 @@ export function Projects() {
               aria-label="Previous project"
               onClick={() => scrollToProject(currentIndex - 1)}
             >
-              <ArrowLeft size={18} aria-hidden="true" />
+              <ArrowUp size={18} aria-hidden="true" />
             </button>
             <div className="progress-dots" aria-label="Choose a project">
               {projects.map((project, index) => (
@@ -211,7 +223,7 @@ export function Projects() {
               aria-label="Next project"
               onClick={() => scrollToProject(currentIndex + 1)}
             >
-              <ArrowRight size={18} aria-hidden="true" />
+              <ArrowDown size={18} aria-hidden="true" />
             </button>
           </div>
         </div>

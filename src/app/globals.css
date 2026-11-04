@@ -417,30 +417,47 @@ h3 {
 }
 
 .projects-carousel {
+  position: relative;
   max-width: 62rem;
+  padding-right: 3.75rem;
   margin: 0 auto;
 }
 
 .project-carousel {
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-}
-
-.project-carousel::-webkit-scrollbar {
-  display: none;
+  position: relative;
+  height: clamp(22rem, 52vh, 36rem);
+  overflow: hidden;
+  perspective: 70rem;
+  touch-action: pan-x;
 }
 
 .project-carousel-track {
-  display: flex;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .project-slide {
-  flex: 0 0 100%;
-  min-width: 0;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  height: 78%;
   padding: 0.15rem;
-  scroll-snap-align: center;
+  opacity: 0.28;
+  pointer-events: none;
+  transform: translateY(calc(-50% + var(--slide-offset))) scale(0.82);
+  transition:
+    transform 500ms cubic-bezier(0.2, 0.75, 0.25, 1),
+    opacity 500ms ease;
+  z-index: 1;
+}
+
+.project-slide.is-active {
+  z-index: 2;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(-50%) scale(1);
 }
 
 .project-card {
@@ -452,20 +469,30 @@ h3 {
 }
 
 .project-slide .project-card {
+  width: 100%;
+  height: 100%;
   max-width: 48rem;
   margin: 0 auto;
 }
 
 .project-slide .project-image {
-  height: clamp(11rem, 27vh, 18rem);
+  height: clamp(8rem, 19vh, 14rem);
 }
 
 .project-carousel-controls {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-  margin-top: 1rem;
+  flex-direction: column;
+  gap: 0.65rem;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.project-carousel-controls .progress-dots {
+  flex-direction: column;
 }
 
 .section-content {
@@ -717,6 +744,35 @@ h3 {
 
   .hero-orbit::after {
     width: 8rem;
+  }
+
+  .projects-carousel {
+    padding-right: 3rem;
+  }
+
+  .project-carousel {
+    height: clamp(21rem, 49vh, 30rem);
+  }
+
+  .project-slide {
+    height: 82%;
+  }
+
+  .project-slide .project-card {
+    gap: 0.5rem;
+    padding: 0.85rem;
+  }
+
+  .project-slide .project-image {
+    height: clamp(6.5rem, 15vh, 8rem);
+    min-height: 6.5rem;
+  }
+
+  .project-slide .muted-text {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
   }
 
   .display-title {
