@@ -614,6 +614,11 @@ h3 {
   place-items: center;
 }
 
+.hero-logo {
+  width: clamp(6.5rem, 15vw, 8rem);
+  margin: 0;
+}
+
 .hero-orbit::before,
 .hero-orbit::after {
   position: absolute;

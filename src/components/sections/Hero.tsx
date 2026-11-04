@@ -1,4 +1,6 @@
 import { ArrowDownRight, MapPin } from "lucide-react";
+import Image from "next/image";
+import Logo from "@/app/assets/ZZ-NO-BG.png";
 import { profile } from "@/data/profile";
 
 type HeroProps = {
@@ -45,7 +47,16 @@ export function Hero({ onNavigate }: HeroProps) {
           </p>
         </div>
         <div className="hero-orbit" aria-hidden="true">
-          <span className="hero-orbit-mark">[Z]</span>
+          <div className="welcome-cover-logo hero-logo">
+            <Image
+              src={Logo}
+              alt=""
+              width={128}
+              height={128}
+              priority
+              className="welcome-cover-image"
+            />
+          </div>
         </div>
       </div>
     </section>
