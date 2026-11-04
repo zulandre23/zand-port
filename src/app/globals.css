@@ -8,6 +8,7 @@
   --foreground: #10191c;
   --surface: #ffffff;
   --surface-raised: #e8eff0;
+  --logo-surface: #ffffff;
   --muted: #526267;
   --border: #c9d6d8;
   --accent: #087c78;
@@ -22,6 +23,7 @@
   --foreground: #ecf8f6;
   --surface: #0c191c;
   --surface-raised: #132529;
+  --logo-surface: #d8f3ef;
   --muted: #a4b8b8;
   --border: #294044;
   --accent: #38d6cb;
@@ -149,7 +151,7 @@ h3 {
   place-items: center;
   border: 1px solid var(--accent);
   border-radius: 50%;
-  background: var(--surface);
+  background: var(--logo-surface);
   box-shadow: 0 0 3rem var(--glow), inset 0 0 2rem var(--glow);
   animation: welcome-logo-pulse 2.4s ease-in-out infinite;
 }
@@ -242,7 +244,7 @@ h3 {
   place-items: center;
   border: 1px solid var(--accent);
   border-radius: 50%;
-  background: var(--surface);
+  background: var(--logo-surface);
   box-shadow: 0 0 1.25rem var(--glow);
   transition: transform 180ms ease, box-shadow 180ms ease;
 }
