@@ -240,7 +240,8 @@ Opsional: skrip `npm run new:project -- <slug>` (di `scripts/new-project.mjs`) y
 - [x] README mencakup fitur, stack, cara menjalankan, cara menambah project, sumber data, dan tema.
 - [x] Hanya satu konfigurasi PostCSS aktif (`postcss.config.js`) dan Tailwind v3 memakai `tailwind.config.js`.
 - [x] Lighthouse mobile lokal ≥90 untuk Performance, Accessibility, Best Practices, dan SEO.
-- [ ] Preview Deployment Vercel gagal: GitHub status untuk commit `a557805` melaporkan deployment failure; URL preview dan production membalas 404 `DEPLOYMENT_NOT_FOUND`.
+- [x] Preview Vercel untuk commit `6c96f51` berstatus Ready dan halaman berhasil dibuka setelah login sebagai anggota team; deployment protection mewajibkan login anggota team.
+- [x] Domain production `https://zand-zone.vercel.app/` terverifikasi merespons HTTP 200; pemilik memilih mempertahankan domain ini. `https://zand-port.vercel.app/` tidak digunakan dan membalas 404 `DEPLOYMENT_NOT_FOUND`.
 
 ## 13. Larangan untuk Agent
 
@@ -287,6 +288,7 @@ Audit dan rencana dilakukan sebelum implementasi. Audit awal dicatat di Lampiran
 | `e4a00b3` | Revisi Home dan About | Memakai logo cover pada Home; merangkum profil berdasarkan CV dan memperbarui ketersediaan menjadi remote serta onsite. |
 | `4ea8474` | Penyamaan logo dan ikon Stack | Menggunakan logo yang sama di header/footer dengan animasi hanya saat hover, memenuhi tinggi area footer Contact desktop, dan menambahkan ikon pada semua teknologi Stack. |
 | `8247fd0` | Menambahkan drag mouse | Menambahkan drag pada area non-interaktif horizontal scroller desktop tanpa mengganti scroll-snap, wheel, atau swipe sentuh. |
+| `6c96f51` | Upgrade Next.js ke versi patched | Memperbarui Next.js ke 15.5.29 beserta lockfile; lint/build lulus dan perubahan dipush ke branch redesign. |
 
 Perubahan konten yang belum disebut sebagai commit terpisah, termasuk penghapusan Case Study berdasarkan permintaan pemilik, masuk pada commit revisi Projects/Contact. Project yang ditampilkan sekarang tetap memakai satu sumber data bertipe di `src/data/projects.ts`.
 
@@ -309,6 +311,6 @@ Verifikasi dilakukan pada 4 November 2026 di branch `redesign/portfolio-v2`, men
 | Aksesibilitas dasar | Jumlah `h1`, gambar tanpa atribut alt, link tanpa href, external link tanpa noopener | 1 `h1`; 0 gambar tanpa alt; 0 link tanpa href; 0 external link tanpa noopener. |
 | Kontras token | Rasio kontras foreground/muted/accent utama pada permukaan light/dark | Terukur sekitar 5.04:1–17.70:1, melewati ambang teks normal WCAG AA 4.5:1 untuk pasangan yang diperiksa. Ini bukan audit kontras otomatis seluruh state/elemen. |
 | Lighthouse mobile | Lighthouse 12.8.2, build produksi lokal, throttling simulator; satu kali pengukuran pada 4 November 2026 | Performance **96**, Accessibility **96**, Best Practices **96**, SEO **100**; FCP 1.6 s, LCP 2.7 s, Speed Index 1.9 s, TBT 30 ms, CLS 0.03. Tidak ada run warnings. Insight yang perlu ditinjau: forced reflow dan critical request/network dependency tree. |
-| Preview/prod deploy | Branch `redesign/portfolio-v2`, GitHub commit status, URL preview dan production | Branch berhasil dipush ke `origin`. Vercel check untuk commit `a557805` berakhir failure; URL preview dan production membalas HTTP 404 `DEPLOYMENT_NOT_FOUND`. Build logs tidak dapat diperiksa karena environment tidak memiliki `.vercel/project.json`, Vercel CLI, atau token. |
+| Preview/prod deploy | GitHub status, Vercel Deployments/Domains/Deployment Protection, serta URL preview dan domain production | Commit `6c96f51` berstatus **Ready** pada Preview. Setelah pemilik login ke Vercel, preview `https://zand-port-6dwnne2uf-zands-projects-b1fe0547.vercel.app/` berhasil dimuat; title, enam panel, heading utama, metadata description, navigasi, dan link project/sosial diperiksa. Deployment Protection menggunakan Vercel Authentication: pengunjung harus login dan menjadi anggota team. Project Domains hanya mencantumkan `zand-zone.vercel.app` (Production, valid); domain yang sedang terpasang mengarah ke deployment Production dari branch `main` pada commit `64af315`. `https://zand-port.vercel.app/` tetap HTTP 404 `DEPLOYMENT_NOT_FOUND` karena tidak tercantum sebagai domain project. Perubahan domain/protection tidak dilakukan. |
 
-Lighthouse mobile dan pemeriksaan tema sebelum first paint lulus pada build lokal. Deployment tetap belum terverifikasi dan saat ini gagal. Langkah berikutnya: pemilik memeriksa project/build logs dan konfigurasi Vercel (atau menyediakan akses CLI yang sesuai), lalu jalankan ulang deployment; URL production saat ini juga memberikan 404.
+Lighthouse mobile dan pemeriksaan tema sebelum first paint lulus pada build lokal. Preview terbaru berhasil diperiksa secara visual setelah login. Pemilik memilih mempertahankan domain production `zand-zone.vercel.app`; domain `zand-port.vercel.app` tidak digunakan. Deployment Protection sengaja tidak diubah. Lighthouse pada URL preview belum dijalankan.
