@@ -16,6 +16,7 @@ import { Projects } from "@/components/sections/Projects";
 import { TechStack } from "@/components/sections/TechStack";
 import { Header, type SectionLink } from "@/components/layout/Header";
 import { ProgressIndicator } from "@/components/layout/ProgressIndicator";
+import { WelcomeCover } from "@/components/layout/WelcomeCover";
 
 type Panel = SectionLink & {
   content: ReactNode;
@@ -34,6 +35,8 @@ export function HorizontalScroller() {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const currentSectionRef = useRef(0);
   const [currentSection, setCurrentSection] = useState(0);
+  const [showWelcome, setShowWelcome] = useState(true);
+  const dismissWelcome = useCallback(() => setShowWelcome(false), []);
 
   const scrollToSection = useCallback((index: number) => {
     const scroller = scrollerRef.current;
@@ -146,6 +149,7 @@ export function HorizontalScroller() {
         id="main-container"
         className="horizontal-scroller"
         tabIndex={0}
+        inert={showWelcome}
         aria-label="Portfolio panels. Use the arrow keys to navigate."
         onScroll={handleScroll}
         onKeyDown={handleKeyDown}
@@ -161,6 +165,9 @@ export function HorizontalScroller() {
         currentSection={currentSection}
         onNavigate={scrollToSection}
       />
+      {showWelcome && (
+        <WelcomeCover onComplete={dismissWelcome} />
+      )}
     </div>
   );
 }

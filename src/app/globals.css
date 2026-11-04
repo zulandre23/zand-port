@@ -96,6 +96,131 @@ h3 {
     var(--background);
 }
 
+.welcome-cover {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: grid;
+  overflow: hidden;
+  place-items: center;
+  background:
+    radial-gradient(ellipse at center, var(--glow), transparent 55%),
+    var(--background);
+  color: var(--foreground);
+  opacity: 1;
+  transition: opacity 450ms ease, visibility 450ms ease;
+}
+
+.welcome-cover-exiting {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.welcome-cover-grid {
+  position: absolute;
+  inset: -50%;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-position: center;
+  background-size: 4rem 4rem;
+  mask-image: radial-gradient(ellipse, black, transparent 65%);
+  opacity: 0.18;
+  transform: perspective(35rem) rotateX(58deg) scale(1.7);
+  animation: welcome-grid-drift 12s linear infinite;
+}
+
+.welcome-cover-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: min(90vw, 52rem);
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: welcome-content-enter 900ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
+.welcome-cover-logo {
+  display: grid;
+  width: clamp(7rem, 20vw, 10rem);
+  aspect-ratio: 1;
+  margin-bottom: 1.5rem;
+  place-items: center;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  background: var(--surface);
+  box-shadow: 0 0 3rem var(--glow), inset 0 0 2rem var(--glow);
+  animation: welcome-logo-pulse 2.4s ease-in-out infinite;
+}
+
+.welcome-cover-image {
+  width: 65%;
+  height: 65%;
+  object-fit: contain;
+}
+
+.welcome-cover-kicker,
+.welcome-cover-caption {
+  color: var(--muted);
+  font-family: var(--font-display), sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.welcome-cover-title {
+  margin: 0 0 1rem;
+  font-size: clamp(1.7rem, 5.2vw, 4rem);
+  letter-spacing: -0.055em;
+}
+
+.welcome-cover-title span {
+  color: var(--accent);
+}
+
+.welcome-cover-caption {
+  margin-bottom: 0;
+}
+
+.welcome-cover-skip {
+  position: absolute;
+  z-index: 2;
+  right: max(1.25rem, env(safe-area-inset-right));
+  bottom: max(1.25rem, env(safe-area-inset-bottom));
+  padding: 0.65rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--foreground);
+  cursor: pointer;
+}
+
+@keyframes welcome-grid-drift {
+  to {
+    background-position: 0 4rem, 4rem 0;
+  }
+}
+
+@keyframes welcome-content-enter {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes welcome-logo-pulse {
+  50% {
+    box-shadow: 0 0 4.5rem var(--glow), inset 0 0 2rem var(--glow);
+    transform: scale(1.04);
+  }
+}
+
 .portfolio-header {
   position: absolute;
   inset: 0 0 auto;
@@ -624,5 +749,11 @@ h3 {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .welcome-cover-grid,
+  .welcome-cover-content,
+  .welcome-cover-logo {
+    animation: none !important;
   }
 }
