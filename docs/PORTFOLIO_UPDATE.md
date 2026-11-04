@@ -14,15 +14,16 @@ Bagian bertanda **TODO** diisi oleh pemilik repo sebelum/selama pengerjaan.
 ## 1a. Keputusan Final (mengalahkan bagian lain jika ada konflik)
 
 - **Aksen warna: pertahankan teal/cyan.** Di light mode pakai versi lebih gelap (mis. `teal-700`) untuk teks dan tombol agar kontras lolos WCAG AA; cyan terang hanya untuk dark mode.
-- **Section tambahan yang dibangun: Experience dan Case Study.** Tidak ada section Sertifikasi, Testimonials, atau Blog untuk saat ini.
+- **Section tambahan final: Experience.** Case Study dihapus atas permintaan pemilik; tidak ada section Sertifikasi, Testimonials, atau Blog.
+- **Projects:** gunakan vertical Peekaboo Carousel dengan autoplay dan kontrol manual; semua entri tetap berasal dari `src/data/projects.ts`.
 - **Tidak ada tombol/section Download CV.** Jangan menambah file CV atau folder `public/cv/`.
 - **Contact:** pertahankan tautan kontak yang sudah ada dan tambahkan Instagram: https://www.instagram.com/zuuulllll_/ (simpan di `src/data/profile.ts`, buka di tab baru dengan `rel="noopener noreferrer"`).
 - **Placeholder "Coming Soon" dihapus dari data project.** Jika perlu kesan "segera hadir", buat satu kartu penutup di komponen, bukan di `projects.ts`.
 - **Horizontal scroll: jangan tulis ulang logika yang sudah berjalan.**
 
-## 2. Kondisi Saat Ini
+## 2. Kondisi Awal Sebelum Audit
 
-Diamati dari halaman repo (isi `src/` belum diaudit):
+Catatan baseline sebelum Tahap 1; bukan gambaran kondisi repo saat ini:
 
 - Stack: Next.js, TypeScript, Tailwind CSS, ESLint
 - Deploy: Vercel (https://zand-port.vercel.app), branch utama `main`
@@ -70,34 +71,33 @@ Diamati dari halaman repo (isi `src/` belum diaudit):
 
 ## 4. Arah Desain (isi/ubah sesuai selera)
 
-- Gaya: **TODO** (minimalis modern / bold / editorial / dark-first)
-- Warna: aksen teal/cyan (dipertahankan), netral untuk sisanya. Light mode memakai teal yang lebih gelap untuk kontras
-- Tipografi: **TODO** (contoh: Geist atau Inter untuk teks, 1 font display) — pakai `next/font`
+- Gaya: **bold futuristik**, sesuai arah yang disetujui pemilik.
+- Warna: aksen teal/cyan; light mode memakai teal gelap, dark mode memakai cyan terang; warna disalurkan melalui CSS variables.
+- Tipografi: Inter untuk teks dan Orbitron untuk display, dimuat melalui `next/font`.
 - Referensi portfolio yang disukai: **TODO** (tempel 2–3 link)
-- Animasi: halus dan ringan; tidak boleh mengorbankan performa
-- Bentuk komponen: **TODO** (sudut membulat / tajam, bayangan / border)
+- Animasi: cover pembuka singkat, transisi carousel halus, dan efek logo saat hover; hormati `prefers-reduced-motion`.
+- Bentuk komponen: panel geometris dengan border, glow, dan sudut kartu membulat.
 
 ## 5. Struktur Panel (Urutan Horizontal)
 
-1. **Hero** — nama, peran, 1 kalimat value, CTA (Lihat Project, Kontak)
-2. **About** — 3–5 kalimat + status ketersediaan ("Open to work": fulltime/freelance/remote)
-3. **Featured Projects / Case Study** — project asli terbaik dengan cerita singkat (masalah, peran, solusi, hasil)
-4. **All Projects** — grid/daftar semua project dari `projects.ts` (bisa filter berdasarkan stack)
-5. **Tech Stack** — dikelompokkan: Frontend, Backend, Database, Tools
-6. **Experience** — timeline pengalaman kerja/freelance (hanya yang boleh ditampilkan)
-7. **Process** (opsional) — 3–4 langkah cara kerja, cocok untuk calon klien
-8. **Contact** — tautan kontak yang sudah ada + Instagram (https://www.instagram.com/zuuulllll_/). Tanpa tombol Download CV
+Urutan final setelah revisi pemilik:
 
-Section tambahan yang dibangun: Experience dan Case Study. Education/Sertifikasi, Testimonials, dan Blog tidak dibuat untuk saat ini.
-Jangan terlalu banyak panel; tiap panel harus menambah nilai.
+1. **Home** — value statement, CTA project/kontak, lokasi, dan logo.
+2. **About** — ringkasan profil dari CV dan ketersediaan remote/onsite.
+3. **Projects** — vertical Peekaboo Carousel dengan autoplay, pause/play, navigasi manual, swipe, dan indikator.
+4. **Tech Stack** — teknologi dikelompokkan ke Frontend, Backend/BaaS, Integration & Tools, dan Familiar.
+5. **Experience** — pengalaman PROCSI, e-learning freelance, dan Assist.id.
+6. **Contact** — email dan sosial dengan ikon, grid Mondrian, serta footer profil di kanan desktop.
+
+Case Study dihapus atas permintaan pemilik. Tidak ada panel Process terpisah; Education/Sertifikasi, Testimonials, dan Blog tidak dibuat.
 
 ## 6. Konten yang Harus Disiapkan Pemilik
 
 - [ ] Foto/avatar profesional → `public/images/avatar.*`
-- [ ] Teks About (versi singkat)
-- [ ] Daftar project terbaik (3–6), masing-masing: judul, masalah yang diselesaikan, peran, tech stack, link demo, link repo, screenshot
-- [ ] Pengalaman kerja/freelance (yang tidak terikat NDA)
-- [ ] Tautan kontak (yang sudah ada) + Instagram: https://www.instagram.com/zuuulllll_/
+- [x] Teks About ringkas sudah dirangkum dari CV yang diberikan.
+- [ ] Daftar 3–6 project terbaik dengan informasi lengkap; saat ini portfolio menampilkan 2 project.
+- [x] Pengalaman kerja/freelance diberikan dan dimasukkan ke section Experience.
+- [x] Tautan kontak yang dipakai, termasuk Instagram, sudah tersedia.
 
 Jika konten belum tersedia, agent memakai placeholder bertanda `TODO`, bukan mengarang.
 
@@ -204,21 +204,19 @@ Opsional: skrip `npm run new:project -- <slug>` (di `scripts/new-project.mjs`) y
 
 ## 9. SEO & Performa
 
-- [ ] Metadata per halaman (title, description) lewat Next.js Metadata API
-- [ ] Open Graph + Twitter image
-- [ ] `sitemap.xml` dan `robots.txt`
-- [ ] `next/image` untuk semua gambar, `next/font` untuk font
-- [ ] Target Lighthouse ≥ 90 di semua kategori (cek mode mobile)
-- [ ] Hindari JavaScript berlebih di panel yang statis
+- [x] Metadata title/description, Open Graph/Twitter image, sitemap, dan robots tersedia.
+- [x] Gambar project memakai `next/image`; font Inter dan Orbitron memakai `next/font`.
+- [ ] Target Lighthouse ≥ 90 di semua kategori (cek mode mobile) — belum terukur, Lighthouse tidak tersedia di environment verifikasi.
+- [ ] Hindari JavaScript berlebih di panel yang statis — bundle/coverage belum diprofilkan.
 
 ## 10. Aksesibilitas
 
-- [ ] Heading berurutan (satu `h1`)
-- [ ] Alt text untuk gambar bermakna
-- [ ] Fokus keyboard terlihat; navigasi horizontal bisa dipakai tanpa mouse
-- [ ] Kontras warna lolos WCAG AA (dark dan light)
-- [ ] Toggle tema punya label aksesibel
-- [ ] Animasi menghormati `prefers-reduced-motion`
+- [x] Satu `h1` terdeteksi; urutan navigasi keyboard diuji.
+- [x] Gambar memiliki atribut `alt`; logo dekoratif menggunakan alt kosong.
+- [x] Fokus keyboard terlihat lewat `:focus-visible`; navigasi panel menerima tombol panah.
+- [x] Rasio kontras token foreground/muted/accent utama memenuhi WCAG AA pada light dan dark mode.
+- [x] Toggle tema memiliki label aksesibel.
+- [x] Cover dan carousel menghormati `prefers-reduced-motion`.
 
 ## 11. Alur Git
 
@@ -231,15 +229,17 @@ Opsional: skrip `npm run new:project -- <slug>` (di `scripts/new-project.mjs`) y
 
 ## 12. Definition of Done
 
-- [ ] Horizontal scroll tetap berfungsi (desktop, mobile, keyboard)
-- [ ] Menambah project hanya perlu edit `projects.ts` + taruh gambar
-- [ ] Dark dan light mode berfungsi tanpa flash, kontras lolos
-- [ ] Tampil baik di mobile, tablet, desktop
-- [ ] Tidak ada error lint/build
-- [ ] Semua link berfungsi
-- [ ] README sudah ditulis ulang (fitur, stack, cara menjalankan, cara menambah project, screenshot)
-- [ ] Konfigurasi PostCSS/Tailwind sudah dirapikan (tidak ada duplikasi)
-- [ ] Lighthouse sesuai target
+- [x] Horizontal scroll diuji melalui wheel, swipe, navigasi klik, dots, dan keyboard.
+- [x] Drag mouse desktop menggeser panel; klik pada kontrol interaktif tetap bekerja.
+- [x] Project uji dapat ditambahkan hanya di `projects.ts`; entri uji tanpa gambar/link menampilkan fallback lalu dihapus.
+- [x] Dark/light toggle dan penyimpanan tema diuji; rasio kontras token utama memenuhi AA.
+- [ ] Flash tema sebelum hydration belum diukur frame-per-frame.
+- [x] Layout diuji pada viewport 390, 768, dan 1280 px; tidak ada overflow horizontal halaman.
+- [x] `npm run lint` dan `npm run build` lulus.
+- [x] Tautan project dan sosial yang dapat diuji merespons HTTP 200; email menggunakan tautan `mailto:`.
+- [x] README mencakup fitur, stack, cara menjalankan, cara menambah project, sumber data, dan tema.
+- [x] Hanya satu konfigurasi PostCSS aktif (`postcss.config.js`) dan Tailwind v3 memakai `tailwind.config.js`.
+- [ ] Lighthouse sesuai target — belum diukur karena Lighthouse tidak tersedia; Preview Deployment Vercel juga belum diuji.
 
 ## 13. Larangan untuk Agent
 
@@ -265,3 +265,48 @@ Opsional: skrip `npm run new:project -- <slug>` (di `scripts/new-project.mjs`) y
   - **Sedang — SEO/performa:** metadata hanya title dan description; belum tampak Open Graph/Twitter metadata, sitemap, atau robots. `next/image` sudah digunakan untuk gambar lokal. `next/font` Inter dimuat di layout, sementara Google Fonts Orbitron/Exo 2 diimpor dari bagian akhir CSS; font-family CSS dapat menggantikan Inter dan impor font terlambat berisiko tidak diterapkan/menambah request. Animasi partikel dibuat di client.
   - **Rendah — dokumentasi:** `README.md` masih template create-next-app, bukan panduan portfolio/penambahan project.
 - Batas audit: temuan berasal dari pembacaan berkas; tidak menjalankan install, lint, build, tes, atau pemeriksaan visual.
+
+## 14. Riwayat Pengerjaan dan Revisi
+
+Audit dan rencana dilakukan sebelum implementasi. Audit awal dicatat di Lampiran A; rencana yang disetujui menggunakan arah bold-futuristik, tema teal/cyan, token CSS, dan mempertahankan native horizontal scroll-snap. Riwayat di bawah merangkum setiap revisi implementasi yang tercatat dalam commit:
+
+| Commit | Revisi | Yang diperbarui |
+|---|---|---|
+| `5c3a8c4` | Menyiapkan panduan kerja redesign | Menambahkan dan merapikan instruksi agent, tahapan, spesifikasi portfolio, serta checklist awal. |
+| `a108c3e` | Merapikan konfigurasi Tailwind/PostCSS | Menyatukan konfigurasi agar sesuai dengan Tailwind CSS v3 yang digunakan. |
+| `411759c` | Redesign portfolio utama | Mengganti struktur halaman lama dengan komponen App Router; menambahkan design token, tema light/dark, provider tema, data bertipe (`profile`, `projects`, `stack`, `experience`), komponen UI, navigasi horizontal, metadata, Open Graph, sitemap, robots, dan README portfolio. |
+| `65f4417` | Revisi Projects dan Contact | Memperbarui carousel/project dan layout Contact; menghapus panel Featured/Case Study dari implementasi sesuai keputusan pemilik. |
+| `4941279` | Mengembalikan cover animasi | Menambahkan cover “Welcome to ZAND [Z]ONE” dengan logo dan grid animasi; cover menutup otomatis. |
+| `72761a2` | Mempercepat cover | Memperpendek durasi intro dan menghilangkan kebutuhan tombol skip. |
+| `9cb791b` | Autoplay carousel | Menambahkan autoplay dan kontrol pause/play serta jeda saat interaksi/reduced motion. |
+| `09b9cd3` | Carousel Peekaboo vertikal | Mengubah carousel Project menjadi susunan vertikal dengan slide tetangga mengintip dan navigasi manual. |
+| `8f7557e` | Menghaluskan transisi project | Mempertahankan identitas slide dan memperhalus perpindahan antarproject. |
+| `5845ac1` | Skills dan Contact Mondrian | Memasukkan kategori skills sesuai CV; merancang ulang Contact menjadi grid Mondrian dan menambahkan footer profil di kanan desktop. |
+| `7a29fef` | Pembaruan Work Experience | Mengganti konten menjadi pengalaman PROCSI, e-learning freelance, dan Assist.id; memadatkan tugas ke inti kontribusi. |
+| `e4a00b3` | Revisi Home dan About | Memakai logo cover pada Home; merangkum profil berdasarkan CV dan memperbarui ketersediaan menjadi remote serta onsite. |
+| `4ea8474` | Penyamaan logo dan ikon Stack | Menggunakan logo yang sama di header/footer dengan animasi hanya saat hover, memenuhi tinggi area footer Contact desktop, dan menambahkan ikon pada semua teknologi Stack. |
+| `8247fd0` | Menambahkan drag mouse | Menambahkan drag pada area non-interaktif horizontal scroller desktop tanpa mengganti scroll-snap, wheel, atau swipe sentuh. |
+
+Perubahan konten yang belum disebut sebagai commit terpisah, termasuk penghapusan Case Study berdasarkan permintaan pemilik, masuk pada commit revisi Projects/Contact. Project yang ditampilkan sekarang tetap memakai satu sumber data bertipe di `src/data/projects.ts`.
+
+## 15. Hasil Verifikasi Tahap 4
+
+Verifikasi dilakukan pada 4 November 2026 di branch `redesign/portfolio-v2`, menggunakan browser lokal dan perintah proyek:
+
+| Area | Pemeriksaan | Hasil |
+|---|---|---|
+| Build dan lint | `npm run lint`; `npm run build` | Lulus. Build sempat menemui file lock saat dev server berjalan; setelah server workspace dihentikan sementara, build selesai dan server dev dinyalakan kembali. |
+| Navigasi desktop | Header nav, progress dots, tombol panah, ArrowRight pada scroller, wheel vertikal, dan drag mouse | Lulus; panel aktif dan posisi scroll ikut berubah, tombol CTA tetap dapat diklik. |
+| Navigasi mobile | Swipe horizontal melalui touch event dan menu section | Lulus pada viewport 390 × 844; halaman tidak melebar secara horizontal. |
+| Ukuran responsif | 390, 768, dan 1280 px | Lebar dokumen sama dengan viewport; Contact footer tidak overflow dan tersusun di bawah pada mobile. |
+| Tema | Toggle light/dark, `localStorage`, dan reload dengan tema tersimpan | Lulus; tema tersimpan sebagai `light`/`dark` dan dipulihkan saat reload. Tidak ada pengukuran visual frame pertama sebelum hydration. |
+| Project carousel | Pause/play, Next project, autoplay 5 detik, dan reduced motion | Lulus; autoplay berhenti ketika reduced motion aktif. |
+| Sumber data project | Menambahkan entri dummy hanya pada `src/data/projects.ts` | Lulus; kartu menampilkan “Preview unavailable” dan tidak membuat tautan demo palsu. Entri sementara sudah dihapus. |
+| Stack | Jumlah chip dibandingkan dengan ikon yang dirender | 22 dari 22 teknologi memiliki ikon. |
+| Link | Lima URL sosial/demo diperiksa dengan HTTP HEAD; atribut link eksternal | Semua merespons HTTP 200; semua link `target="_blank"` menggunakan `rel` yang memuat `noopener`. Link email menggunakan `mailto:` dan tidak mengirim email uji. |
+| SEO endpoints | `/robots.txt`, `/sitemap.xml`, `/opengraph-image` | Ketiganya merespons HTTP 200. |
+| Aksesibilitas dasar | Jumlah `h1`, gambar tanpa atribut alt, link tanpa href, external link tanpa noopener | 1 `h1`; 0 gambar tanpa alt; 0 link tanpa href; 0 external link tanpa noopener. |
+| Kontras token | Rasio kontras foreground/muted/accent utama pada permukaan light/dark | Terukur sekitar 5.04:1–17.70:1, melewati ambang teks normal WCAG AA 4.5:1 untuk pasangan yang diperiksa. Ini bukan audit kontras otomatis seluruh state/elemen. |
+| Lighthouse / deploy | Lighthouse mobile dan Preview Deployment Vercel | Belum dilakukan: binary/tool Lighthouse tidak tersedia secara lokal dan branch belum diverifikasi melalui preview deployment. |
+
+Lighthouse ≥90, pemeriksaan tema pada frame pertama, serta preview deployment masih menjadi pekerjaan tersisa sebelum menyatakan seluruh Definition of Done terpenuhi.

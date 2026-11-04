@@ -4,8 +4,8 @@ Portfolio personal ZAND untuk menampilkan profil, project, keahlian, pengalaman,
 
 ## Fitur
 
-- Panel horizontal dengan scroll-snap, navigasi tombol, indikator posisi, serta dukungan keyboard dan swipe.
-- Carousel project dengan kontrol navigasi dan swipe.
+- Panel horizontal dengan scroll-snap, navigasi tombol, indikator posisi, keyboard, wheel, drag mouse, dan swipe.
+- Vertical Peekaboo Carousel project dengan autoplay, pause/play, navigasi manual, serta dukungan reduced motion.
 - Skills dikelompokkan menjadi Frontend, Backend/BaaS, Integration & Tools, dan Familiar.
 - Contact menggunakan grid Mondrian dengan footer profil di sisi kanan.
 - Tema light/dark mengikuti preferensi sistem; pilihan manual tersimpan.
