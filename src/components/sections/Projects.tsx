@@ -21,11 +21,13 @@ import { Card } from "@/components/ui/Card";
 
 export function Projects() {
   const touchStartY = useRef<number | null>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentStep, setCurrentStep] = useState(0);
   const [isAutoplayEnabled, setIsAutoplayEnabled] = useState(true);
   const [isInteractionPaused, setIsInteractionPaused] = useState(false);
   const [isPageVisible, setIsPageVisible] = useState(true);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const currentIndex =
+    ((currentStep % projects.length) + projects.length) % projects.length;
 
   useEffect(() => {
     const motionPreference = window.matchMedia(
@@ -48,8 +50,23 @@ export function Projects() {
   }, []);
 
   const scrollToProject = useCallback((index: number) => {
-    const nextIndex = (index + projects.length) % projects.length;
-    setCurrentIndex(nextIndex);
+    const targetIndex = (index + projects.length) % projects.length;
+    setCurrentStep((step) => {
+      const currentIndex = ((step % projects.length) + projects.length) % projects.length;
+      let difference = targetIndex - currentIndex;
+
+      if (difference > projects.length / 2) {
+        difference -= projects.length;
+      } else if (difference < -projects.length / 2) {
+        difference += projects.length;
+      }
+
+      return step + difference;
+    });
+  }, []);
+
+  const moveProject = useCallback((direction: number) => {
+    setCurrentStep((step) => step + direction);
   }, []);
 
   useEffect(() => {
@@ -63,9 +80,7 @@ export function Projects() {
       return;
     }
 
-    const interval = window.setInterval(() => {
-      scrollToProject(currentIndex + 1);
-    }, 5000);
+    const interval = window.setInterval(() => moveProject(1), 5000);
 
     return () => window.clearInterval(interval);
   }, [
@@ -73,8 +88,8 @@ export function Projects() {
     isAutoplayEnabled,
     isInteractionPaused,
     isPageVisible,
+    moveProject,
     prefersReducedMotion,
-    scrollToProject,
   ]);
 
   return (
@@ -103,21 +118,22 @@ export function Projects() {
               if (touchStartY.current === null) return;
               const deltaY = touchStartY.current - event.changedTouches[0].clientY;
               if (Math.abs(deltaY) > 40) {
-                scrollToProject(currentIndex + (deltaY > 0 ? 1 : -1));
+                moveProject(deltaY > 0 ? 1 : -1);
               }
               touchStartY.current = null;
             }}
           >
             <div className="project-carousel-track">
-              {[-1, 0, 1].map((offset) => {
+              {[currentStep - 1, currentStep, currentStep + 1].map((step) => {
+                const offset = step - currentStep;
                 const index =
-                  (currentIndex + offset + projects.length) % projects.length;
+                  ((step % projects.length) + projects.length) % projects.length;
                 const project = projects[index];
 
                 return (
                 <article
                   className={`project-slide${offset === 0 ? " is-active" : ""}`}
-                  key={`${offset}-${project.slug}`}
+                  key={step}
                   style={
                     {
                       "--slide-offset": `${offset * 70}%`,
@@ -199,7 +215,7 @@ export function Projects() {
               type="button"
               className="icon-button"
               aria-label="Previous project"
-              onClick={() => scrollToProject(currentIndex - 1)}
+              onClick={() => moveProject(-1)}
             >
               <ArrowUp size={18} aria-hidden="true" />
             </button>
@@ -221,7 +237,7 @@ export function Projects() {
               type="button"
               className="icon-button"
               aria-label="Next project"
-              onClick={() => scrollToProject(currentIndex + 1)}
+              onClick={() => moveProject(1)}
             >
               <ArrowDown size={18} aria-hidden="true" />
             </button>
