@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ZAND Portfolio
 
-## Getting Started
+Portfolio personal ZAND untuk menampilkan profil, project, keahlian, pengalaman, dan kontak. Dibangun dengan Next.js App Router, React, TypeScript, dan Tailwind CSS.
 
-First, run the development server:
+## Fitur
+
+- Panel horizontal dengan scroll-snap, navigasi tombol, indikator posisi, keyboard, wheel, drag mouse, dan swipe.
+- Vertical Peekaboo Carousel project dengan autoplay, pause/play, navigasi manual, serta dukungan reduced motion.
+- Skills dikelompokkan menjadi Frontend, Backend/BaaS, Integration & Tools, dan Familiar.
+- Contact menggunakan grid Mondrian dengan footer profil di sisi kanan.
+- Tema light/dark mengikuti preferensi sistem; pilihan manual tersimpan.
+- Data project, profil, stack, dan pengalaman dikelola terpisah dari komponen.
+- Metadata Open Graph/Twitter, sitemap, robots, dan gambar sosial otomatis.
+
+## Menjalankan secara lokal
 
 ```bash
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Buka [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Next.js 15, React 19, TypeScript
+- Tailwind CSS 3
+- next-themes
+- lucide-react
+- Vercel Analytics
 
-## Learn More
+## Menambah project
 
-To learn more about Next.js, take a look at the following resources:
+1. Tambahkan gambar ke `public/projects/<slug>/cover.webp` (rasio 16:9 disarankan).
+2. Tambahkan satu objek bertipe `Project` ke array di `src/data/projects.ts`:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```ts
+   {
+     slug: "project-baru",
+     title: "Nama Project",
+     summary: "Ringkasan faktual project.",
+     stack: ["Next.js", "TypeScript"],
+     image: "/projects/project-baru/cover.webp",
+     demoUrl: "https://example.com",
+     status: "live",
+   }
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. Isi hanya detail dan tautan yang sudah diverifikasi. Hapus field opsional yang belum tersedia; jangan menambah klaim atau data rekaan.
+4. Jalankan `npm run lint` dan `npm run build`.
 
-## Deploy on Vercel
+Project lama saat ini menggunakan aset statis yang diimpor dari `src/app/assets`. Project baru dapat memakai path gambar publik seperti contoh di atas.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Profil, stack, pengalaman, dan tema
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Profil dan tautan sosial: `src/data/profile.ts`
+- Keahlian: `src/data/stack.ts`
+- Pengalaman: `src/data/experience.ts`
+- Project: `src/data/projects.ts`
+- Token light/dark: `src/app/globals.css`
+
+Nilai yang belum diverifikasi ditandai `TODO` dan tidak ditampilkan sebagai tautan aktif.
+
+## Konten visual
+
+- Screenshot project contoh: aset yang sudah ada di `src/app/assets`.
+- Screenshot tambahan: `TODO`.
+- Avatar: `TODO`.
