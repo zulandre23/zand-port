@@ -11,21 +11,17 @@ export type Project = {
   image?: string | StaticImageData;
   demoUrl?: string;
   repoUrl?: string;
-  featured?: boolean;
   year?: number;
   status?: ProjectStatus;
-  caseStudy?: {
-    problem: string;
-    solution: string;
-    result: string;
-  };
 };
 
 export type Experience = {
   title: string;
   organization?: string;
   period?: string;
+  project?: string;
   description: string;
+  highlights?: string[];
 };
 
 export type Profile = {
@@ -34,8 +30,9 @@ export type Profile = {
   location: string;
   bio: string;
   availability: string;
+  email: string;
   socials: {
-    label: string;
+    label: "GitHub" | "LinkedIn" | "Instagram";
     href: string;
   }[];
 };

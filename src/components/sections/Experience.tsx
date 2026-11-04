@@ -12,7 +12,15 @@ export function Experience() {
               {item.title}
               {item.organization ? ` — ${item.organization}` : ""}
             </h3>
+            {item.project && <p className="eyebrow">{item.project}</p>}
             <p className="muted-text">{item.description}</p>
+            {item.highlights && (
+              <ul className="experience-highlights muted-text">
+                {item.highlights.map((highlight) => (
+                  <li key={highlight}>{highlight}</li>
+                ))}
+              </ul>
+            )}
           </article>
         ))}
       </div>

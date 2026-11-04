@@ -11,7 +11,6 @@ import {
 import { About } from "@/components/sections/About";
 import { Contact } from "@/components/sections/Contact";
 import { Experience } from "@/components/sections/Experience";
-import { FeaturedProjects } from "@/components/sections/FeaturedProjects";
 import { Hero } from "@/components/sections/Hero";
 import { Projects } from "@/components/sections/Projects";
 import { TechStack } from "@/components/sections/TechStack";
@@ -25,7 +24,6 @@ type Panel = SectionLink & {
 const sections: SectionLink[] = [
   { id: "home", title: "Home" },
   { id: "about", title: "About" },
-  { id: "case-study", title: "Case Study" },
   { id: "projects", title: "Projects" },
   { id: "stack", title: "Stack" },
   { id: "experience", title: "Experience" },
@@ -63,11 +61,10 @@ export function HorizontalScroller() {
       ),
     },
     { ...sections[1], content: <About /> },
-    { ...sections[2], content: <FeaturedProjects /> },
-    { ...sections[3], content: <Projects /> },
-    { ...sections[4], content: <TechStack /> },
-    { ...sections[5], content: <Experience /> },
-    { ...sections[6], content: <Contact /> },
+    { ...sections[2], content: <Projects /> },
+    { ...sections[3], content: <TechStack /> },
+    { ...sections[4], content: <Experience /> },
+    { ...sections[5], content: <Contact /> },
   ];
 
   useEffect(() => {

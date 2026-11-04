@@ -304,12 +304,56 @@ h3 {
   gap: 1rem;
 }
 
+.projects-carousel {
+  max-width: 62rem;
+  margin: 0 auto;
+}
+
+.project-carousel {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.project-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.project-carousel-track {
+  display: flex;
+}
+
+.project-slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  padding: 0.15rem;
+  scroll-snap-align: center;
+}
+
 .project-card {
   display: flex;
-  min-height: 16rem;
+  min-height: 0;
   flex-direction: column;
   gap: 0.8rem;
   padding: 1.2rem;
+}
+
+.project-slide .project-card {
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+.project-slide .project-image {
+  height: clamp(11rem, 27vh, 18rem);
+}
+
+.project-carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
 .section-content {
@@ -476,6 +520,12 @@ h3 {
 .experience-item {
   padding: 1.2rem;
   border-left: 2px solid var(--accent);
+}
+
+.experience-highlights {
+  display: grid;
+  gap: 0.6rem;
+  padding-left: 1.2rem;
 }
 
 .contact-list {

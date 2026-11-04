@@ -5,6 +5,7 @@ Portfolio personal ZAND untuk menampilkan profil, project, keahlian, pengalaman,
 ## Fitur
 
 - Panel horizontal dengan scroll-snap, navigasi tombol, indikator posisi, serta dukungan keyboard dan swipe.
+- Carousel project dengan kontrol navigasi dan swipe.
 - Tema light/dark mengikuti preferensi sistem; pilihan manual tersimpan.
 - Data project, profil, stack, dan pengalaman dikelola terpisah dari komponen.
 - Metadata Open Graph/Twitter, sitemap, robots, dan gambar sosial otomatis.
@@ -39,7 +40,6 @@ Buka [http://localhost:3000](http://localhost:3000).
      stack: ["Next.js", "TypeScript"],
      image: "/projects/project-baru/cover.webp",
      demoUrl: "https://example.com",
-     featured: false,
      status: "live",
    }
    ```
@@ -54,7 +54,7 @@ Project lama saat ini menggunakan aset statis yang diimpor dari `src/app/assets`
 - Profil dan tautan sosial: `src/data/profile.ts`
 - Keahlian: `src/data/stack.ts`
 - Pengalaman: `src/data/experience.ts`
-- Project dan case study: `src/data/projects.ts`
+- Project: `src/data/projects.ts`
 - Token light/dark: `src/app/globals.css`
 
 Nilai yang belum diverifikasi ditandai `TODO` dan tidak ditampilkan sebagai tautan aktif.
