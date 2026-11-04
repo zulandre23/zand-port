@@ -240,7 +240,7 @@ Opsional: skrip `npm run new:project -- <slug>` (di `scripts/new-project.mjs`) y
 - [x] README mencakup fitur, stack, cara menjalankan, cara menambah project, sumber data, dan tema.
 - [x] Hanya satu konfigurasi PostCSS aktif (`postcss.config.js`) dan Tailwind v3 memakai `tailwind.config.js`.
 - [x] Lighthouse mobile lokal ≥90 untuk Performance, Accessibility, Best Practices, dan SEO.
-- [ ] Preview Deployment Vercel belum diuji; branch belum tersedia di remote dan URL produksi `https://zand-port.vercel.app/` saat pemeriksaan membalas 404 `DEPLOYMENT_NOT_FOUND`.
+- [ ] Preview Deployment Vercel gagal: GitHub status untuk commit `a557805` melaporkan deployment failure; URL preview dan production membalas 404 `DEPLOYMENT_NOT_FOUND`.
 
 ## 13. Larangan untuk Agent
 
@@ -309,6 +309,6 @@ Verifikasi dilakukan pada 4 November 2026 di branch `redesign/portfolio-v2`, men
 | Aksesibilitas dasar | Jumlah `h1`, gambar tanpa atribut alt, link tanpa href, external link tanpa noopener | 1 `h1`; 0 gambar tanpa alt; 0 link tanpa href; 0 external link tanpa noopener. |
 | Kontras token | Rasio kontras foreground/muted/accent utama pada permukaan light/dark | Terukur sekitar 5.04:1–17.70:1, melewati ambang teks normal WCAG AA 4.5:1 untuk pasangan yang diperiksa. Ini bukan audit kontras otomatis seluruh state/elemen. |
 | Lighthouse mobile | Lighthouse 12.8.2, build produksi lokal, throttling simulator; satu kali pengukuran pada 4 November 2026 | Performance **96**, Accessibility **96**, Best Practices **96**, SEO **100**; FCP 1.6 s, LCP 2.7 s, Speed Index 1.9 s, TBT 30 ms, CLS 0.03. Tidak ada run warnings. Insight yang perlu ditinjau: forced reflow dan critical request/network dependency tree. |
-| Preview/prod deploy | Branch remote dan `https://zand-port.vercel.app/` | Branch `redesign/portfolio-v2` belum ada di remote. URL produksi membalas HTTP 404 dengan `DEPLOYMENT_NOT_FOUND`; preview URL tidak tersedia untuk diperiksa. Tidak ada push yang dilakukan. |
+| Preview/prod deploy | Branch `redesign/portfolio-v2`, GitHub commit status, URL preview dan production | Branch berhasil dipush ke `origin`. Vercel check untuk commit `a557805` berakhir failure; URL preview dan production membalas HTTP 404 `DEPLOYMENT_NOT_FOUND`. Build logs tidak dapat diperiksa karena environment tidak memiliki `.vercel/project.json`, Vercel CLI, atau token. |
 
-Lighthouse mobile dan pemeriksaan tema sebelum first paint sudah lulus pada build lokal. Verifikasi deployment masih tertunda: push branch ke origin (dengan persetujuan pemilik bila diperlukan) dan periksa konfigurasi/URL project Vercel; URL produksi saat ini memberikan 404.
+Lighthouse mobile dan pemeriksaan tema sebelum first paint lulus pada build lokal. Deployment tetap belum terverifikasi dan saat ini gagal. Langkah berikutnya: pemilik memeriksa project/build logs dan konfigurasi Vercel (atau menyediakan akses CLI yang sesuai), lalu jalankan ulang deployment; URL production saat ini juga memberikan 404.
