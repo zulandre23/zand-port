@@ -206,7 +206,7 @@ Opsional: skrip `npm run new:project -- <slug>` (di `scripts/new-project.mjs`) y
 
 - [x] Metadata title/description, Open Graph/Twitter image, sitemap, dan robots tersedia.
 - [x] Gambar project memakai `next/image`; font Inter dan Orbitron memakai `next/font`.
-- [ ] Target Lighthouse ≥ 90 di semua kategori (cek mode mobile) — belum terukur, Lighthouse tidak tersedia di environment verifikasi.
+- [x] Target Lighthouse ≥ 90 di semua kategori tercapai pada satu audit build produksi lokal mobile (Performance 96, Accessibility 96, Best Practices 96, SEO 100). Preview deployment belum dapat diuji.
 - [ ] Hindari JavaScript berlebih di panel yang statis — bundle/coverage belum diprofilkan.
 
 ## 10. Aksesibilitas
@@ -233,13 +233,14 @@ Opsional: skrip `npm run new:project -- <slug>` (di `scripts/new-project.mjs`) y
 - [x] Drag mouse desktop menggeser panel; klik pada kontrol interaktif tetap bekerja.
 - [x] Project uji dapat ditambahkan hanya di `projects.ts`; entri uji tanpa gambar/link menampilkan fallback lalu dihapus.
 - [x] Dark/light toggle dan penyimpanan tema diuji; rasio kontras token utama memenuhi AA.
-- [ ] Flash tema sebelum hydration belum diukur frame-per-frame.
+- [x] Probe class tema dan paint pertama untuk preferensi light dan dark menunjukkan tema terset sebelum first paint.
 - [x] Layout diuji pada viewport 390, 768, dan 1280 px; tidak ada overflow horizontal halaman.
 - [x] `npm run lint` dan `npm run build` lulus.
 - [x] Tautan project dan sosial yang dapat diuji merespons HTTP 200; email menggunakan tautan `mailto:`.
 - [x] README mencakup fitur, stack, cara menjalankan, cara menambah project, sumber data, dan tema.
 - [x] Hanya satu konfigurasi PostCSS aktif (`postcss.config.js`) dan Tailwind v3 memakai `tailwind.config.js`.
-- [ ] Lighthouse sesuai target — belum diukur karena Lighthouse tidak tersedia; Preview Deployment Vercel juga belum diuji.
+- [x] Lighthouse mobile lokal ≥90 untuk Performance, Accessibility, Best Practices, dan SEO.
+- [ ] Preview Deployment Vercel belum diuji; branch belum tersedia di remote dan URL produksi `https://zand-port.vercel.app/` saat pemeriksaan membalas 404 `DEPLOYMENT_NOT_FOUND`.
 
 ## 13. Larangan untuk Agent
 
@@ -299,7 +300,7 @@ Verifikasi dilakukan pada 4 November 2026 di branch `redesign/portfolio-v2`, men
 | Navigasi desktop | Header nav, progress dots, tombol panah, ArrowRight pada scroller, wheel vertikal, dan drag mouse | Lulus; panel aktif dan posisi scroll ikut berubah, tombol CTA tetap dapat diklik. |
 | Navigasi mobile | Swipe horizontal melalui touch event dan menu section | Lulus pada viewport 390 × 844; halaman tidak melebar secara horizontal. |
 | Ukuran responsif | 390, 768, dan 1280 px | Lebar dokumen sama dengan viewport; Contact footer tidak overflow dan tersusun di bawah pada mobile. |
-| Tema | Toggle light/dark, `localStorage`, dan reload dengan tema tersimpan | Lulus; tema tersimpan sebagai `light`/`dark` dan dipulihkan saat reload. Tidak ada pengukuran visual frame pertama sebelum hydration. |
+| Tema | Toggle light/dark, `localStorage`, reload, serta probe MutationObserver/first-paint untuk preferensi light dan dark | Lulus; tema tersimpan sebagai `light`/`dark`, dipulihkan saat reload, dan class/color-scheme yang sesuai aktif sebelum first paint. |
 | Project carousel | Pause/play, Next project, autoplay 5 detik, dan reduced motion | Lulus; autoplay berhenti ketika reduced motion aktif. |
 | Sumber data project | Menambahkan entri dummy hanya pada `src/data/projects.ts` | Lulus; kartu menampilkan “Preview unavailable” dan tidak membuat tautan demo palsu. Entri sementara sudah dihapus. |
 | Stack | Jumlah chip dibandingkan dengan ikon yang dirender | 22 dari 22 teknologi memiliki ikon. |
@@ -307,6 +308,7 @@ Verifikasi dilakukan pada 4 November 2026 di branch `redesign/portfolio-v2`, men
 | SEO endpoints | `/robots.txt`, `/sitemap.xml`, `/opengraph-image` | Ketiganya merespons HTTP 200. |
 | Aksesibilitas dasar | Jumlah `h1`, gambar tanpa atribut alt, link tanpa href, external link tanpa noopener | 1 `h1`; 0 gambar tanpa alt; 0 link tanpa href; 0 external link tanpa noopener. |
 | Kontras token | Rasio kontras foreground/muted/accent utama pada permukaan light/dark | Terukur sekitar 5.04:1–17.70:1, melewati ambang teks normal WCAG AA 4.5:1 untuk pasangan yang diperiksa. Ini bukan audit kontras otomatis seluruh state/elemen. |
-| Lighthouse / deploy | Lighthouse mobile dan Preview Deployment Vercel | Belum dilakukan: binary/tool Lighthouse tidak tersedia secara lokal dan branch belum diverifikasi melalui preview deployment. |
+| Lighthouse mobile | Lighthouse 12.8.2, build produksi lokal, throttling simulator; satu kali pengukuran pada 4 November 2026 | Performance **96**, Accessibility **96**, Best Practices **96**, SEO **100**; FCP 1.6 s, LCP 2.7 s, Speed Index 1.9 s, TBT 30 ms, CLS 0.03. Tidak ada run warnings. Insight yang perlu ditinjau: forced reflow dan critical request/network dependency tree. |
+| Preview/prod deploy | Branch remote dan `https://zand-port.vercel.app/` | Branch `redesign/portfolio-v2` belum ada di remote. URL produksi membalas HTTP 404 dengan `DEPLOYMENT_NOT_FOUND`; preview URL tidak tersedia untuk diperiksa. Tidak ada push yang dilakukan. |
 
-Lighthouse ≥90, pemeriksaan tema pada frame pertama, serta preview deployment masih menjadi pekerjaan tersisa sebelum menyatakan seluruh Definition of Done terpenuhi.
+Lighthouse mobile dan pemeriksaan tema sebelum first paint sudah lulus pada build lokal. Verifikasi deployment masih tertunda: push branch ke origin (dengan persetujuan pemilik bila diperlukan) dan periksa konfigurasi/URL project Vercel; URL produksi saat ini memberikan 404.
